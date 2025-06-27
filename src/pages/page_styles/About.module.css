@@ -82,7 +82,7 @@
 .galleryTile {
   break-inside: avoid;
   margin-bottom: 20px;
-  background: white;
+  background: #f0f0f0;
   border-radius: 8px;
   padding: 10px;
   box-sizing: border-box;
