@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./page_styles/HomePage.module.css";
 import Block from "../components/Block";
+const publicUrl = import.meta.env.BASE_URL;
 
 function FadeInSection({ children }) {
   const [isVisible, setVisible] = useState(false);
@@ -38,7 +39,7 @@ export default function HomePage() {
           <div className={styles.overlay}>
             <div className={styles.heroContent}>
               <img
-                src="src/assets/alex.jpeg"
+                src={`${publicUrl}/assets/alex.jpeg`}
                 alt="Alex"
                 className={styles.heroImage}
               />
@@ -66,7 +67,7 @@ export default function HomePage() {
         <div id="about" className={styles.blocks}>
           <FadeInSection>
             <Block
-              imgSrc="src/assets/alex.jpeg"
+              imgSrc={`${publicUrl}/assets/alex.jpeg`}
               header="My Info"
               subheading={
                 "B.S. Computer Science, with a Minor in Management and Leadership at Boston College"
@@ -91,7 +92,7 @@ export default function HomePage() {
           </FadeInSection>
           <FadeInSection>
             <Block
-              imgSrc="src/assets/with_friends.JPG"
+              imgSrc={`${publicUrl}/assets/with_friends.JPG`}
               header="About Me"
               text={[
                 {
@@ -100,7 +101,7 @@ export default function HomePage() {
                 {
                   text: "Read more...",
                   link: true,
-                  linkTo: "/about",
+                  linkTo: "./#/about",
                 },
               ]}
             />

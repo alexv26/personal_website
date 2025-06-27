@@ -56,9 +56,9 @@
 
 .galleryWrapper {
   display: flex;
-  justify-content: center; /* Center horizontally */
+  justify-content: center;
   flex-direction: column;
-  align-items: center; /* Center vertically (optional) */
+  align-items: center;
   margin-top: 0;
   width: 100%;
   height: 100%;
@@ -70,36 +70,50 @@
 }
 
 .gallery {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-start;
+  column-count: 3;
+  column-gap: 20px;
   background-color: rgba(255, 255, 255, 0.8);
-  height: fit-content;
   width: 95%;
-  padding: 10px;
+  padding: 20px;
   border-radius: 8px;
+  box-sizing: border-box;
 }
 
 .galleryTile {
-  display: inline-block; /* so the tile wraps based on image width */
-  text-align: center;
+  break-inside: avoid;
+  margin-bottom: 20px;
+  background: white;
+  border-radius: 8px;
   padding: 10px;
+  box-sizing: border-box;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.galleryTile:hover {
+  transform: scale(1.03);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
 .galleryTile img {
-  width: 300px;
-  height: auto; /* preserve natural width */
-  display: block; /* removes space under image */
+  width: 100%;
+  height: auto;
   border-radius: 8px;
+  display: block;
 }
 
 .galleryTile p {
   color: black;
   margin-top: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
   word-wrap: break-word;
-  max-width: 300px; /* wraps within image width */
+  max-width: 100%;
+}
+
+.galleryTile img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 768px) {
@@ -107,12 +121,12 @@
     flex-direction: column;
     align-items: center;
     height: auto;
+    margin: 10px 0;
   }
 
   .box,
   .imageBox {
-    max-width: 90%;
-    width: 100%;
+    width: 85%;
   }
 
   .box {
@@ -121,5 +135,17 @@
 
   .imageBox {
     margin-top: 1rem;
+  }
+}
+
+@media (max-width: 1200px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 768px) {
+  .gallery {
+    column-count: 1;
   }
 }
