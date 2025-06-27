@@ -1,0 +1,145 @@
+.flexContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  min-height: 500px;
+  height: 100%;
+  min-width: 400px;
+}
+
+.flexContainer img {
+  width: auto;
+  max-width: 400px;
+  max-height: 300px;
+
+  margin-bottom: 1rem;
+  border-radius: 7px;
+}
+
+.textContainer {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  max-width: 340px;
+}
+
+.header {
+  font-size: 2rem;
+  margin-top: 0.2rem;
+  color: black;
+  word-wrap: break-word;
+  margin-bottom: 0;
+  max-width: 340px;
+}
+
+.subheader {
+  font-size: 1.3rem;
+  margin-top: 0;
+  color: rgb(43, 43, 43);
+  word-wrap: break-word;
+  margin-bottom: 0;
+  max-width: 340px;
+}
+
+.subsubheader {
+  font-size: 1rem;
+  margin-top: 0;
+  color: rgb(93, 93, 93);
+}
+
+.bodyText {
+  font-size: 1rem;
+  color: black;
+  word-wrap: break-word;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  position: relative;
+}
+
+.bodyText p {
+  margin: 0;
+  color: black;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.bodyText a {
+  color: black;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.bodyText a:hover {
+  text-decoration: underline;
+}
+
+.readMoreWrapper {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.readMore {
+  color: red;
+  text-decoration: none;
+}
+
+.readMore:hover {
+  text-decoration: underline;
+}
+
+.text {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .flexContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    background-color: #f0f0f0;
+    border-radius: 6px;
+    min-height: 500px;
+    height: 100%;
+    min-width: 310px;
+  }
+
+  .flexContainer img {
+    width: auto;
+    max-width: 400px;
+    height: 200px;
+    margin-bottom: 1rem;
+    border-radius: 7px;
+  }
+
+  .textContainer {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 340px;
+  }
+
+  .header {
+    font-size: 2rem;
+    margin-top: 0.2rem;
+    color: black;
+    word-wrap: break-word;
+    margin-bottom: 0;
+    max-width: 340px;
+  }
+
+  .subheader {
+    font-size: 1.3rem;
+    margin-top: 0;
+    color: rgb(43, 43, 43);
+    word-wrap: break-word;
+    margin-bottom: 0;
+    max-width: 340px;
+  }
+}
