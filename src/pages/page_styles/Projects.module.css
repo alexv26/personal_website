@@ -1,52 +1,48 @@
 .flexwrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  height: 100%;
   padding: 1rem;
 }
 
 .content {
-  background-color: white;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
   padding: 2rem;
   border-radius: 8px;
+  width: 90%;
   height: fit-content;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.text {
-  display: flex;
-  text-align: center;
-  align-items: center;
-  gap: 0.5rem; /* Add consistent spacing */
-  margin: 0;
-  flex-direction: column;
-  margin-bottom: 0px;
-}
-
-.text h1 {
-  color: rgb(238, 211, 13);
-  font-size: 50px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.text h2 {
-  color: rgb(46, 46, 46);
-  font-size: 40px;
-  font-weight: bold;
-  margin: 0;
-}
-
-.text p {
+.content > h1 {
   color: black;
-  margin: 0;
+  width: 100%;
+  text-align: center;
+  text-shadow: 2px 2px 2px rgb(125, 125, 125);
 }
 
-.text a {
-  margin-top: 10px;
-  background-color: #007bff;
-  padding: 10px;
+.projectTile {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  width: 80%;
   border-radius: 8px;
+}
+
+.projectTile h2 {
+  width: 100%;
   color: white;
+  text-align: center;
+  text-shadow: 2px 2px 2px rgb(0, 0, 0);
+}
+
+.projectTile img {
+  width: 80%;
+  height: auto;
+}
+
+.projectTile p {
+  text-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
