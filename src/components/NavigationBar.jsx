@@ -18,7 +18,7 @@ function NavigationBar() {
           {" "}
           <Link to="/">Home</Link>
           <Link to="/about">About</Link>
-          <Link to="/Projects">Projects</Link>
+          <Link to="/projects">Projects</Link>
         </div>
       </div>
     </>

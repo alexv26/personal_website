@@ -84,3 +84,80 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+.profileButton {
+  cursor: initial;
+  border: none;
+  outline: none;
+}
+
+.profileButton:focus {
+  outline: none;
+}
+
+.secretButton {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+.secretButton button {
+  background: none;
+  font-size: 3rem;
+}
+
+.countdown {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2.5rem;
+  color: #ff4c4c;
+  z-index: 9999;
+  font-family: "Courier New", Courier, monospace;
+  background: black;
+  padding: 1rem 2rem;
+  border: 3px solid red;
+  border-radius: 15px;
+  box-shadow: 0 0 30px red;
+  text-align: center;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 20px red;
+  }
+  50% {
+    box-shadow: 0 0 40px red;
+  }
+  100% {
+    box-shadow: 0 0 20px red;
+  }
+}
+
+.label {
+  color: #ffae42;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px black;
+}
+
+.timer {
+  color: #00ff00;
+  font-weight: bold;
+  font-size: 5rem;
+  text-shadow: 0 0 8px lime;
+}
+
+.fullscreenVideo {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: 99999;
+  pointer-events: none;
+}

@@ -51,12 +51,6 @@ export default function About() {
               and positive relationships.
             </p>
           </div>
-          <div className={styles.imageBox}>
-            <img
-              src={`${publicUrl}/assets/with_friends.JPG`}
-              alt="With friends"
-            />
-          </div>
         </div>
         <div className={styles.galleryWrapper}>
           <div className={styles.galleryHeader}>

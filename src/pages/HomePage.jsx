@@ -5,6 +5,7 @@ const publicUrl = import.meta.env.BASE_URL;
 
 function FadeInSection({ children }) {
   const [isVisible, setVisible] = useState(false);
+
   const domRef = useRef();
 
   useEffect(() => {
@@ -31,18 +32,111 @@ function FadeInSection({ children }) {
   );
 }
 
+function Countdown({ onComplete }) {
+  const countdownTime = 10000; // 20 seconds
+  const [timeLeft, setTimeLeft] = useState(countdownTime);
+  const timerRef = useRef();
+
+  useEffect(() => {
+    const start = performance.now();
+
+    timerRef.current = requestAnimationFrame(function update(now) {
+      const elapsed = now - start;
+      const remaining = Math.max(countdownTime - elapsed, 0);
+      setTimeLeft(remaining);
+      if (remaining > 0) {
+        timerRef.current = requestAnimationFrame(update);
+      } else {
+        onComplete();
+      }
+    });
+
+    return () => cancelAnimationFrame(timerRef.current);
+  }, [onComplete]);
+
+  const seconds = Math.floor(timeLeft / 1000);
+  const milliseconds = Math.floor(timeLeft % 1000)
+    .toString()
+    .padStart(3, "0");
+
+  return (
+    <div className={styles.countdown}>
+      <h1
+        className="glitch"
+        data-text={`☢️ Nuke Incoming In: ${seconds}.${milliseconds} seconds ☠️`}
+      >
+        ☢️ Nuke Incoming In: {seconds}.{milliseconds} seconds ☠️
+      </h1>
+    </div>
+  );
+}
+
 export default function HomePage() {
+  const [secretButtonIsVisible, setSecretButtonIsVisible] = useState(false);
+  const [clickCount, setClickCount] = useState(0);
+  const [nukeActive, setNukeActive] = useState(false);
+  const [showNukeVideo, setShowNukeVideo] = useState(false);
+  const [showGlitchVideo, setShowGlitchVideo] = useState(false);
+  const audioRef = useRef();
+  const nukeVideoRef = useRef();
+  const glitchVideoRef = useRef();
+
+  useEffect(() => {
+    if (clickCount === 3) {
+      setSecretButtonIsVisible(true);
+    }
+  }, [clickCount]);
+
+  useEffect(() => {
+    if (nukeActive) {
+      // Play initial audio (nuke.mp3) if needed before countdown ends
+      audioRef.current?.play();
+    }
+  }, [nukeActive]);
+
+  // Handler when countdown ends:
+  function handleCountdownComplete() {
+    // Stop nuke.mp3 audio immediately
+
+    document.body.style.overflow = "hidden";
+
+    // Show nuke explosion video
+    setShowNukeVideo(true);
+  }
+
+  // When nuke video ends, play glitch video
+  function onNukeVideoEnded() {
+    setShowNukeVideo(false);
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.currentTime = 0;
+    }
+    setShowGlitchVideo(true);
+  }
+
+  // When glitch video ends, redirect
+  function onGlitchVideoEnded() {
+    document.body.style.overflow = "auto";
+    window.location.href = "/#/game";
+  }
+
   return (
     <>
       <div className={styles.container}>
         <div className={styles.hero}>
           <div className={styles.overlay}>
             <div className={styles.heroContent}>
-              <img
-                src={`${publicUrl}/assets/alex.jpeg`}
-                alt="Alex"
-                className={styles.heroImage}
-              />
+              <button
+                onClick={() => setClickCount(clickCount + 1)}
+                className={styles.profileButton}
+                style={{ background: "none" }}
+              >
+                <img
+                  src={`${publicUrl}/assets/alex.jpeg`}
+                  alt="Alex"
+                  className={styles.heroImage}
+                />
+              </button>
               <div>
                 <h1>Alexander Velsmid</h1>
                 <p>
@@ -51,11 +145,11 @@ export default function HomePage() {
                 </p>
                 <button
                   className={styles.cta}
-                  onClick={() =>
+                  onClick={() => {
                     document
                       .getElementById("about")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
                 >
                   Learn More
                 </button>
@@ -107,6 +201,47 @@ export default function HomePage() {
             />
           </FadeInSection>
         </div>
+
+        {secretButtonIsVisible && (
+          <div className={styles.secretButton}>
+            <FadeInSection>
+              <button onClick={() => setNukeActive(true)}>☢️</button>
+            </FadeInSection>
+          </div>
+        )}
+
+        {nukeActive && (
+          <>
+            <audio ref={audioRef} src={`${publicUrl}/assets/nuke.mp3`} />
+            {!showNukeVideo && !showGlitchVideo && (
+              <Countdown onComplete={handleCountdownComplete} />
+            )}
+
+            {showNukeVideo && (
+              <video
+                ref={nukeVideoRef}
+                src={`${publicUrl}/assets/nuke_explosion.mp4`}
+                autoPlay
+                playsInline
+                className={styles.fullscreenVideo}
+                controls={false}
+                onEnded={onNukeVideoEnded}
+              />
+            )}
+
+            {showGlitchVideo && (
+              <video
+                ref={glitchVideoRef}
+                src={`${publicUrl}/assets/glitch.mp4`}
+                autoPlay
+                playsInline
+                className={styles.fullscreenVideo}
+                controls={false}
+                onEnded={onGlitchVideoEnded}
+              />
+            )}
+          </>
+        )}
       </div>
     </>
   );

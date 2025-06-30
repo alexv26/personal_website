@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import About from "./pages/About";
 import Error from "./pages/Error";
 import Projects from "./pages/Projects";
+import Game from "./pages/Game";
 import "./App.css";
 
 function ScrollToTop() {
@@ -43,6 +44,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<About />} />
             <Route path="/projects" element={<Projects />} />
+            <Route path="/game" element={<Game />} />
             <Route path="/*" element={<Error errorCode={404} />} />
           </Routes>
         </div>

@@ -1,6 +1,5 @@
 import styles from "./page_styles/Projects.module.css";
 const publicUrl = import.meta.env.BASE_URL;
-console.log(publicUrl);
 
 function ProjectTile({ title, description, imgSrc, linkTo }) {
   return (
@@ -8,6 +7,7 @@ function ProjectTile({ title, description, imgSrc, linkTo }) {
       <h2>{title}</h2>
       <img src={imgSrc} />
       <p>{description}</p>
+      <a href={linkTo}>Read more...</a>
     </div>
   );
 }
@@ -26,6 +26,9 @@ export default function Projects() {
               "A big problem for every software engineer and tech company is ensuring their applications are secure. Without proper security, vulnerabilities in code can allow for hackers to gain unauthorized access to user data and private source code. Exploits in code can negatively affect consumers and products, which is a detrimental to companies. In the past, thousands of lines of code would have to be manually reviewed by professionals to find and remove these vulnerabilities. The goal of this project is to create and compare multiple machine learning algorithms that automate the process by taking in a function written in C and running a binary classification model on the function to label it as vulnerable or non-vulnerable. This would alleviate the pain of manual review, and help programmers create more secure applications."
             }
             imgSrc={`${publicUrl}/assets/vulnml.png`}
+            linkTo={
+              "https://www.dropbox.com/scl/fi/kexa4ehuy04yr1z89lk2z/VulnML.pdf?rlkey=6lhr5w6en2f6hpnk31lbphkv7&e=1&st=m6k9tthb&dl=0"
+            }
           />
         </div>
       </div>
