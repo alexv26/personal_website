@@ -49,7 +49,7 @@ export default function Error({ errorCode }) {
             <h1>{errorCode}</h1>
             <h2>{errorName}</h2>
             <p>{errorDescription}</p>
-            <a href="/">Back to Homepage</a>
+            <a href="/personal_website/">Back to Homepage</a>
           </div>
         </div>
       </div>

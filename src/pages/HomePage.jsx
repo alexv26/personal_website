@@ -33,7 +33,7 @@ function FadeInSection({ children }) {
 }
 
 function Countdown({ onComplete }) {
-  const countdownTime = 10000; // 20 seconds
+  const countdownTime = 10000; // 10 seconds
   const [timeLeft, setTimeLeft] = useState(countdownTime);
   const timerRef = useRef();
 
@@ -89,35 +89,38 @@ export default function HomePage() {
 
   useEffect(() => {
     if (nukeActive) {
-      // Play initial audio (nuke.mp3) if needed before countdown ends
+      // Play initial nuke sound audio before countdown ends
       audioRef.current?.play();
     }
   }, [nukeActive]);
 
-  // Handler when countdown ends:
   function handleCountdownComplete() {
-    // Stop nuke.mp3 audio immediately
+    // Stop the initial audio
 
+    // Lock scroll
     document.body.style.overflow = "hidden";
 
     // Show nuke explosion video
     setShowNukeVideo(true);
   }
 
-  // When nuke video ends, play glitch video
   function onNukeVideoEnded() {
     setShowNukeVideo(false);
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.currentTime = 0;
     }
+
+    // Play glitch video next
     setShowGlitchVideo(true);
   }
 
-  // When glitch video ends, redirect
   function onGlitchVideoEnded() {
+    setShowGlitchVideo(false);
+
+    // Unlock scroll and redirect
     document.body.style.overflow = "auto";
-    window.location.href = "/#/game";
+    window.location.href = "./#/game";
   }
 
   return (
@@ -212,11 +215,15 @@ export default function HomePage() {
 
         {nukeActive && (
           <>
+            {/* Initial nuke sound */}
             <audio ref={audioRef} src={`${publicUrl}/assets/nuke.mp3`} />
+
+            {/* Show countdown before video */}
             {!showNukeVideo && !showGlitchVideo && (
               <Countdown onComplete={handleCountdownComplete} />
             )}
 
+            {/* Nuke explosion video */}
             {showNukeVideo && (
               <video
                 ref={nukeVideoRef}
@@ -229,6 +236,7 @@ export default function HomePage() {
               />
             )}
 
+            {/* Glitch video */}
             {showGlitchVideo && (
               <video
                 ref={glitchVideoRef}
