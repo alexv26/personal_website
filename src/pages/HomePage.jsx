@@ -5,7 +5,6 @@ const publicUrl = import.meta.env.BASE_URL;
 
 function FadeInSection({ children }) {
   const [isVisible, setVisible] = useState(false);
-
   const domRef = useRef();
 
   useEffect(() => {
@@ -13,7 +12,7 @@ function FadeInSection({ children }) {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           setVisible(true);
-          observer.unobserve(entry.target); // stop observing once visible
+          observer.unobserve(entry.target);
         }
       });
     });
@@ -33,13 +32,12 @@ function FadeInSection({ children }) {
 }
 
 function Countdown({ onComplete }) {
-  const countdownTime = 10000; // 10 seconds
+  const countdownTime = 10000;
   const [timeLeft, setTimeLeft] = useState(countdownTime);
   const timerRef = useRef();
 
   useEffect(() => {
     const start = performance.now();
-
     timerRef.current = requestAnimationFrame(function update(now) {
       const elapsed = now - start;
       const remaining = Math.max(countdownTime - elapsed, 0);
@@ -50,7 +48,6 @@ function Countdown({ onComplete }) {
         onComplete();
       }
     });
-
     return () => cancelAnimationFrame(timerRef.current);
   }, [onComplete]);
 
@@ -77,9 +74,11 @@ export default function HomePage() {
   const [nukeActive, setNukeActive] = useState(false);
   const [showNukeVideo, setShowNukeVideo] = useState(false);
   const [showGlitchVideo, setShowGlitchVideo] = useState(false);
-  const audioRef = useRef();
+
+  const initialAudioRef = useRef();
+  const nukeAudioRef = useRef();
+  const glitchAudioRef = useRef();
   const nukeVideoRef = useRef();
-  const glitchVideoRef = useRef();
 
   useEffect(() => {
     if (clickCount === 3) {
@@ -89,36 +88,40 @@ export default function HomePage() {
 
   useEffect(() => {
     if (nukeActive) {
-      // Play initial nuke sound audio before countdown ends
-      audioRef.current?.play();
+      // Play initial countdown audio
+      initialAudioRef.current?.play();
     }
   }, [nukeActive]);
 
   function handleCountdownComplete() {
-    // Stop the initial audio
-
-    // Lock scroll
+    // Lock scroll and show video
     document.body.style.overflow = "hidden";
-
-    // Show nuke explosion video
     setShowNukeVideo(true);
+
+    // Play the nuke explosion audio
+    setTimeout(() => {
+      nukeAudioRef.current
+        ?.play()
+        .catch((e) => console.warn("Nuke audio error:", e));
+    }, 100); // slight delay to sync with video
   }
 
   function onNukeVideoEnded() {
-    setShowNukeVideo(false);
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.currentTime = 0;
+    if (initialAudioRef.current) {
+      initialAudioRef.current.pause();
+      initialAudioRef.current.currentTime = 0;
     }
-
-    // Play glitch video next
-    setShowGlitchVideo(true);
+    setShowNukeVideo(false);
+    nukeAudioRef.current?.pause();
+    nukeAudioRef.current.currentTime = 0;
+    document.body.style.overflow = "auto";
+    window.location.href = "./#/game";
   }
 
   function onGlitchVideoEnded() {
-    setShowGlitchVideo(false);
+    glitchAudioRef.current?.pause();
+    glitchAudioRef.current.currentTime = 0;
 
-    // Unlock scroll and redirect
     document.body.style.overflow = "auto";
     window.location.href = "./#/game";
   }
@@ -193,7 +196,7 @@ export default function HomePage() {
               header="About Me"
               text={[
                 {
-                  text: "I am a rising senior at Boston College, studying Computer Science (BS) and pursuing a minor in Management and Leadership. Throughout my life I have been interested in problem-solving, and CS is the perfect way for me to turn this interest into a career. Not only is the process of coding in itself a problem-solving process, the applications we develop also provide solutions to pervasive real-world problems.",
+                  text: "I am a rising senior at Boston College, studying Computer Science (BS) and pursuing a minor in Management and Leadership. Throughout my life I have been interested in problem-solving, and CS is the perfect way for me to turn this interest into a career.",
                 },
                 {
                   text: "Read more...",
@@ -215,37 +218,29 @@ export default function HomePage() {
 
         {nukeActive && (
           <>
-            {/* Initial nuke sound */}
-            <audio ref={audioRef} src={`${publicUrl}/assets/nuke.mp3`} />
+            {/* Audio Tracks */}
+            <audio ref={initialAudioRef} src={`${publicUrl}/assets/nuke.mp3`} />
+            <audio
+              ref={nukeAudioRef}
+              src={`${publicUrl}/assets/nuke_and_glitch.mp3`}
+            />
 
-            {/* Show countdown before video */}
+            {/* Countdown */}
             {!showNukeVideo && !showGlitchVideo && (
               <Countdown onComplete={handleCountdownComplete} />
             )}
 
-            {/* Nuke explosion video */}
+            {/* Nuke Explosion Video (muted) */}
             {showNukeVideo && (
               <video
                 ref={nukeVideoRef}
-                src={`${publicUrl}/assets/nuke_explosion.mp4`}
+                src={`${publicUrl}/assets/nuke_and_glitch.mp4`}
                 autoPlay
+                muted
                 playsInline
                 className={styles.fullscreenVideo}
                 controls={false}
                 onEnded={onNukeVideoEnded}
-              />
-            )}
-
-            {/* Glitch video */}
-            {showGlitchVideo && (
-              <video
-                ref={glitchVideoRef}
-                src={`${publicUrl}/assets/glitch.mp4`}
-                autoPlay
-                playsInline
-                className={styles.fullscreenVideo}
-                controls={false}
-                onEnded={onGlitchVideoEnded}
               />
             )}
           </>

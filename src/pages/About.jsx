@@ -16,14 +16,16 @@ export default function About() {
     <>
       <div className={styles.flexContainer}>
         <div className={styles.aboutSection}>
+          <div className={styles.aboutHeader}>
+            <h2>About Me</h2>
+          </div>
           <div className={styles.box}>
-            <h1>About Me</h1>
             <p>
               I am a rising senior at Boston College, studying Computer Science
               (BS) and pursuing a minor in Management and Leadership. Throughout
               my life I have been interested in problem-solving, and computer
               science is the perfect way for me to channel this passion into a
-              career. NBeyond the problem-solving inherent in coding itself, the
+              career. Beyond the problem-solving inherent in coding itself, the
               applications we create provide practical solutions to significant
               real-world challenges.
             </p>

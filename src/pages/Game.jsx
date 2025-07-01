@@ -5,10 +5,12 @@ export default function Game() {
     <>
       <div className={styles.flexWrapper}>
         <div className={styles.box}>
-          <h2>You found the secret!</h2>
+          <h2 style={{ color: "red", textEmphasis: "bold", fontSize: "40px" }}>
+            YOU DIED
+          </h2>
           <p>
-            After the nuke explosion you will be rewarded with an interactive
-            game, which is a WIP. Come back later to see the final product
+            Congrats. You found the secret. But, you blew up the whole website.
+            nice going.
           </p>
         </div>
       </div>

@@ -1,3 +1,15 @@
+:root {
+  /* Liquid glass background styles */
+  --liquid-glass-bg: rgba(255, 255, 255, 0.1);
+  --liquid-glass-border: 1px solid rgba(255, 255, 255, 0.3);
+  --liquid-glass-blur: blur(40px);
+  --liquid-glass-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+
+  /* Text styles for liquid glass */
+  --liquid-glass-text-color: #e4e4e4;
+  --liquid-glass-text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+
 .background-image {
   position: fixed;
   top: 0;
