@@ -1,16 +1,23 @@
 // src/data/gameData.js
 
-export const foodHealthBoost = 3;
-export const steroidStrengthBoost = 5;
-export const scrapBoost = 3;
-export const potIodideBoost = 5;
-export const maxRadiationPunishment = 30;
-export const maxExploreEventsPerDay = 3;
+export const foodHealthBoost = 2;
+export const steroidStrengthBoost = 2;
+export const scrapBoost = 2;
+export const potIodideBoost = 2;
+export const maxRadiationPunishment = 50;
+export const maxExploreEventsPerDay = 2;
+
+const shelterFortificationBoost = 10;
+const medKitBoost = 10;
+const strengthBoosterBoost = 15;
+const radiationShieldBoost = 15;
+const energyBarHealthBoost = 5;
+const energyBarStrengthBoost = 5;
 
 export const statBounds = {
   health: { min: 0, max: 1000 },
   strength: { min: 0, max: 100 },
-  radiation: { min: 0, max: Infinity },
+  radiation: { min: 0, max: 50 },
   shelterStrength: { min: 0, max: Infinity },
   sillyCaterpillar: { min: 0, max: 1 },
   enlightened: { min: 0, max: 1 },
@@ -37,23 +44,30 @@ export const consumableActions = {
   },
   medKit: {
     label: `Use Med Kit (+20 health)`,
-    changes: { medKit: -1, health: +20 },
+    changes: { medKit: -1, health: +medKitBoost },
   },
   shelterFortifications: {
-    label: `Use Shelter Fortifications (+10 shelter strength)`,
-    changes: { shelterFortifications: -1, shelterStrength: +10 },
+    label: `Use Shelter Fortifications (+${shelterFortificationBoost} shelter strength)`,
+    changes: {
+      shelterFortifications: -1,
+      shelterStrength: +shelterFortificationBoost,
+    },
   },
   strengthBooster: {
-    label: `Use Strength Booster (+15 strength)`,
-    changes: { strengthBooster: -1, strength: +15 },
+    label: `Use Strength Booster (+${strengthBoosterBoost} strength)`,
+    changes: { strengthBooster: -1, strength: +strengthBoosterBoost },
   },
   radiationShield: {
-    label: `Use Radiation Shield (-30 radiation)`,
-    changes: { radiationShield: -1, radiation: -30 },
+    label: `Use Radiation Shield (-${radiationShieldBoost} radiation)`,
+    changes: { radiationShield: -1, radiation: -radiationShieldBoost },
   },
   energyBar: {
-    label: `Eat Energy Bar (+8 health, +5 strength)`,
-    changes: { energyBar: -1, health: +8, strength: +5 },
+    label: `Eat Energy Bar (+${energyBarHealthBoost} health, +${energyBarStrengthBoost} strength)`,
+    changes: {
+      energyBar: -1,
+      health: +energyBarHealthBoost,
+      strength: +energyBarStrengthBoost,
+    },
   },
   sillyCaterpillar: {
     label: `Read the silly caterpillar`,
@@ -63,27 +77,27 @@ export const consumableActions = {
 
 export const craftingRecipes = {
   shelterFortifications: {
-    label: "Reinforce Shelter",
+    label: `Shelter Fortifications (+${scrapBoost} shelter strength)`,
     requires: { scrap: 5, potIodide: 2 },
     applyChanges: { shelterFortifications: 1 },
   },
   medKit: {
-    label: "Craft Med Kit",
+    label: `Craft Med Kit (+${medKitBoost} health)`,
     requires: { food: 3, potIodide: 1, scrap: 1 },
     applyChanges: { medKit: 1 },
   },
   strengthBooster: {
-    label: "Make Strength Booster",
-    requires: { steroids: 2, scrap: 2 },
+    label: `Make Strength Booster (+${strengthBoosterBoost} strength)`,
+    requires: { steroids: 5, scrap: 3 },
     applyChanges: { strengthBooster: 1 },
   },
   radiationShield: {
-    label: "Build Radiation Shield",
-    requires: { scrap: 3, potIodide: 3 },
+    label: `Build Radiation Shield (-${radiationShieldBoost} radiation)`,
+    requires: { scrap: 5, potIodide: 3 },
     applyChanges: { radiationShield: 1 },
   },
   energyBar: {
-    label: "Make Energy Bar",
+    label: `Make Energy Bar (+${energyBarHealthBoost} health, +${energyBarStrengthBoost} strength)`,
     requires: { food: 2, steroids: 1 },
     applyChanges: { energyBar: 1 },
   },
@@ -97,6 +111,14 @@ export const craftingRecipes = {
       radiationShield: 1,
     },
     applyChanges: { rocketShip: 1 },
+  },
+  nuke: {
+    label: "Develop a nuclear bomb",
+    requires: {
+      scrap: 100,
+      potIodide: 100,
+      radiationShield: 100,
+    },
   },
 };
 
@@ -112,6 +134,7 @@ export const inventoryKeys = [
   "energyBar",
   "rocketShip",
   "sillyCaterpillar",
+  "nuke",
 ];
 
 export const inventoryDisplayNames = {
@@ -126,13 +149,14 @@ export const inventoryDisplayNames = {
   energyBar: "Energy Bar",
   rocketShip: "Rocket Ship",
   sillyCaterpillar: "The Silly Caterpillar (book)",
+  nuke: "Nuclear Bomb",
 };
 
 export const exploreEvents = {
   good: [
     {
       description: "You find a hidden toolbox filled with useful scrap.",
-      changes: { scrap: +3 },
+      changes: { scrap: +2 },
     },
     {
       description:
@@ -141,88 +165,89 @@ export const exploreEvents = {
     },
     {
       description: "A collapsed bunker yields canned food and scrap.",
-      changes: { food: +4, scrap: +2 },
+      changes: { food: +2, scrap: +1 },
     },
     {
       description: "You find a water purifier! No more sickness… for now.",
-      changes: { health: +8, radiation: -5 },
+      changes: { health: +4, radiation: -2 },
     },
     {
       description: "You discover solar panels and reinforce your shelter.",
-      changes: { shelterStrength: +6 },
+      changes: { shelterStrength: +3 },
     },
     {
       description: "You find a stash of emergency supplies in a fridge.",
-      changes: { food: +4, potIodide: +2 },
+      changes: { food: +2, potIodide: +1 },
     },
     {
       description: "A fellow survivor gifts you scrap and meds.",
-      changes: { scrap: +4, health: +4 },
+      changes: { scrap: +1, medKit: +1 },
     },
     {
       description: "You stumble on a makeshift lab and pocket some supplies.",
-      changes: { steroids: +3, potIodide: +1 },
+      changes: { steroids: +2, potIodide: +1 },
     },
     {
       description:
         "A kind stranger helps patch your wounds and reinforce your shelter.",
-      changes: { health: +10, shelterStrength: +4 },
+      changes: { health: +3, shelterStrength: +2 },
     },
     {
       description: "You discover a pre-war vending machine still operational.",
-      changes: { food: +5, scrap: +1 },
+      changes: { food: +1, scrap: +1 },
     },
     {
       description:
         "A child leads you to a hidden cache of supplies before disappearing.",
-      changes: { potIodide: +3, steroids: +2 },
+      changes: { potIodide: +1, steroids: +2 },
     },
     {
       description: "You find a body holding a backpack filled with gear.",
-      changes: { medKit: +1, scrap: +3, food: +2 },
+      changes: { medKit: +1, scrap: +1 },
     },
     {
       description:
         "An old shelter collapses — but you salvage valuable components.",
-      changes: { scrap: +6, shelterStrength: +3 },
+      changes: { shelterFortifications: +2 },
     },
     {
       description: "You find blueprints for advanced shelter designs.",
-      changes: { shelterStrength: +8 },
+      changes: { shelterStrength: +2 },
     },
     {
       description: "You find a friendly drone who delivers aid packages.",
-      changes: { food: +3, radiation: -3 },
+      changes: { food: +1, radiation: -3 },
     },
     {
       description: "You find an abandoned lab fridge still humming.",
-      changes: { steroids: +4, radiationShield: +1 },
+      changes: { steroids: +1, radiationShield: +1 },
     },
   ],
   bad: [
     {
       description: "You walk through irradiated ruins. You feel sick.",
-      changes: { radiation: +10 },
+      changes: { radiation: +15 },
     },
     {
       description: "A gang steals your scrap while you're distracted.",
       changes: { scrap: -2 },
     },
     {
-      description: "You take shelter in a leaky shack and it collapses.",
-      changes: { health: -6, shelterStrength: -5 },
+      description:
+        "You venture out to find some scraps, but are forced to seek shelter in a leaky shelter along your journey. You find nothing.",
+      changes: { health: -8, shelterStrength: -5 },
     },
     {
-      description: "You cut yourself on rusty metal and get an infection.",
-      changes: { health: -10 },
+      description: "You cut yourself on radiated metal and get an infection.",
+      changes: { health: -10, radiation: +8 },
     },
     {
       description: "A windstorm tears through, damaging your gear.",
-      changes: { shelterStrength: -7 },
+      changes: { shelterStrength: -8 },
     },
     {
       description: "You fall into a shallow pit and twist your ankle.",
-      changes: { health: -8 },
+      changes: { health: -15 },
     },
     {
       description: "You walk into a radiation hotspot. Your dosimeter screams.",
@@ -237,12 +262,31 @@ export const exploreEvents = {
       changes: { medKit: -1 },
     },
     {
-      description: "You’re mugged at knifepoint. They take everything useful.",
-      changes: { food: -2, potIodide: -2, steroids: -2 },
+      description: "You are attacked by a hobo.",
+      changes: { health: -5 },
     },
     {
-      description: "You’re ambushed and injected with an unknown chemical.",
+      description: "You're mugged at knifepoint. They take everything useful.",
+      changes: {
+        food: -100,
+        shelterFortifications: -100,
+        medKit: -100,
+        radiationShield: -100,
+        energyBar: -100,
+        strengthBooster: -100,
+      },
+    },
+    {
+      description: "You're ambushed and injected with an unknown chemical.",
       changes: { radiation: +8, strength: -3 },
+    },
+    {
+      description: "You inject an old vial labeled 'RAD-X'. Unclear effect.",
+      changes: { radiation: -8, health: -3 },
+    },
+    {
+      description: "You wake up in an irradiated zone with no memory.",
+      changes: { radiation: +12 },
     },
   ],
   tradeoff: [
@@ -252,24 +296,15 @@ export const exploreEvents = {
     },
     {
       description: "You collect useful scrap from a wreck... full of spores.",
-      changes: { scrap: +6, health: -5 },
+      changes: { scrap: +3, health: -15 },
     },
     {
-      description: "You scavenge broken machines for parts.",
-      changes: { scrap: +5, shelterStrength: -3 },
+      description: "You convert some of your shelter fortifications into scrap",
+      changes: { scrap: +3, shelterFortifications: -3 },
     },
     {
       description: "You drink questionable water — feel strong, but nauseous.",
-      changes: { strength: +4, radiation: +6 },
-    },
-    {
-      description: "You inject an old vial labeled 'RAD-X'. Unclear effect.",
-      changes: { radiation: -8, health: -3 },
-    },
-    {
-      description:
-        "You find an energy bar and duct tape — win some, lose some.",
-      changes: { food: +2, scrap: +1, health: -2 },
+      changes: { strength: +4, radiation: +8 },
     },
     {
       description: "You cross a river to reach a supply crate but get soaked.",
@@ -284,17 +319,13 @@ export const exploreEvents = {
       changes: { strengthBooster: +1, radiation: +10 },
     },
     {
-      description: "You enter a locked vault. You must use scrap to open it.",
+      description:
+        "You enter a locked vault. You must use scrap to open it. Inside, you find steroids.",
       changes: { scrap: -3, steroids: +2 },
     },
     {
-      description: "You wake up in an irradiated zone with no memory.",
-      changes: { radiation: +12, food: +1, scrap: +1 },
-    },
-    {
-      description:
-        "You trade your last med kit for fuel to light a fire tonight.",
-      changes: { medKit: -1, shelterStrength: +5 },
+      description: "You trade a med kit for fuel to light a fire tonight.",
+      changes: { medKit: -1, shelterStrength: +2 },
     },
   ],
   rare: [
@@ -335,22 +366,22 @@ export const restEvents = {
     {
       description:
         "A nearby generator powers on briefly, heating your shelter.",
-      changes: { radiation: -3, shelterStrength: +4 },
+      changes: { radiation: -3, shelterStrength: +3 },
     },
     {
       description:
         "You listen to music on an old cassette. It lifts your spirits.",
-      changes: { strength: +4 },
+      changes: { strength: +2 },
     },
     {
       description: "A convoy drops aid during the night.",
-      changes: { food: +3, potIodide: +2, scrap: +3 },
+      changes: { food: +2, potIodide: +2, scrap: +3 },
     },
   ],
   bad: [
     {
       description: "Your shelter leaks and you get sick.",
-      changes: { health: -5, radiation: +5 },
+      changes: { health: -15, radiation: +5 },
     },
     {
       description: "A thief steals your potassium iodide and scrap.",
@@ -366,7 +397,7 @@ export const restEvents = {
     },
     {
       description: "Rats chew through your shelter walls.",
-      changes: { shelterStrength: -4 },
+      changes: { shelterStrength: -16 },
     },
     {
       description: "You sleep through a storm — your shelter floods.",
@@ -375,29 +406,29 @@ export const restEvents = {
     {
       description:
         "You are forced to use potassium iodide to survive a radiation spike.",
-      changes: { potIodide: -1, radiation: -10 },
+      changes: { potIodide: -1, radiation: +4 },
     },
     {
       description: "Something drips from the ceiling onto your food stash.",
-      changes: { food: -2 },
+      changes: { food: -5 },
     },
     {
       description: "You inhale moldy air while sleeping. Your health suffers.",
-      changes: { health: -6 },
+      changes: { health: -16 },
     },
     {
       description: "A looter breaks in and you must fight them off.",
-      changes: { health: -10, scrap: -2 },
+      changes: { health: -20, scrap: -2 },
     },
   ],
   tradeoff: [
     {
       description: "You spend the night reinforcing shelter with scrap.",
-      changes: { scrap: -2, shelterStrength: +6 },
+      changes: { scrap: -2, shelterStrength: +3 },
     },
     {
       description: "You take a risk and burn iodide for warmth.",
-      changes: { potIodide: -1, health: +3 },
+      changes: { potIodide: -2, health: +2, shelterStrength: +1 },
     },
     {
       description: "You sleep exposed to the elements but regain health.",
@@ -421,7 +452,7 @@ export const restEvents = {
     },
     {
       description: "You decide to test an unlabelled syringe in desperation.",
-      changes: { health: +10, radiation: +5 },
+      changes: { health: +6, radiation: +5 },
     },
     {
       description: "You reinforce shelter by tearing down inner walls.",
@@ -432,13 +463,13 @@ export const restEvents = {
 
 export const initialState = {
   day: 1,
-  health: 100,
+  health: 30,
   strength: 10,
-  radiation: 0,
+  radiation: 25,
   shelterStrength: 10,
   enlightened: 0,
   logs: ["You emerge from the bunker. The wasteland is silent..."],
   inventory: Object.fromEntries(inventoryKeys.map((key) => [key, 0])),
   restEventLikelihoods: { good: 0.2, bad: 0.6, tradeoff: 0.2 },
-  exploreEventLikelihoods: { good: 0.2, bad: 0.1, tradeoff: 0.2, rare: 0.01 },
+  exploreEventLikelihoods: { good: 0.2, bad: 0.6, tradeoff: 0.18, rare: 0.02 },
 };

@@ -25,6 +25,8 @@ export default function Game() {
   const [readingInfo, setReadingInfo] = useState(false);
   const [exploreEventsInDay, setExploreEventsInDay] = useState(0);
   const [wonGame, setWonGame] = useState(false);
+  const [launchedNuke, setLaunchedNuke] = useState(false);
+  const [secretEnding, setSecretEnding] = useState(false);
 
   const addLog = (message) => {
     setState((prev) => ({
@@ -202,6 +204,7 @@ export default function Game() {
       addLog(
         "After reading The Silly Caterpillar, a strange clarity settles over you. Somehow, you feel wiser — more attuned to danger, more drawn to opportunity. Your future choices feel... sharper."
       );
+      setState((prev) => applyEventChanges(prev, changes));
       return;
     }
     if ((state.inventory[itemKey] ?? 0) === 0) {
@@ -254,7 +257,7 @@ export default function Game() {
   };
 
   useEffect(() => {
-    if (state.radiation >= 100) {
+    if (state.radiation >= statBounds.radiation.max) {
       addLog(
         `You have high radiation. -${maxRadiationPunishment} health. Radiation is reset.`
       );
@@ -270,10 +273,20 @@ export default function Game() {
   const restartGame = () => {
     setState(initialState);
     setWonGame(false);
+    setLaunchedNuke(false);
+    setSecretEnding(false);
   };
 
   const launchRocketShip = () => {
     setWonGame(true);
+  };
+
+  const launchNuke = () => {
+    setLaunchedNuke(true);
+  };
+
+  const handleSecretEnding = () => {
+    setSecretEnding(true);
   };
 
   function renderActions() {
@@ -287,6 +300,22 @@ export default function Game() {
     }
 
     if (wonGame) {
+      return (
+        <>
+          <button onClick={restartGame}>Restart Game</button>
+        </>
+      );
+    }
+
+    if (launchedNuke) {
+      return (
+        <>
+          <button onClick={restartGame}>Restart Game</button>
+        </>
+      );
+    }
+
+    if (secretEnding) {
       return (
         <>
           <button onClick={restartGame}>Restart Game</button>
@@ -315,6 +344,28 @@ export default function Game() {
             Launch Rocket Ship
           </button>
         )}
+        {state.inventory.nuke >= 1 && state.radiation >= 40 && (
+          <>
+            <button
+              onClick={launchNuke}
+              style={{ color: "red", borderColor: "red" }}
+            >
+              Launch Nuke
+            </button>
+          </>
+        )}
+        {state.inventory.nuke >= 1 &&
+          state.radiation >= 40 &&
+          state.inventory.sillyCaterpillar >= 1 && (
+            <>
+              <button
+                onClick={handleSecretEnding}
+                style={{ color: "cyan", borderColor: "cyan" }}
+              >
+                Launch Nuke with The Silly Caterpillar inside
+              </button>
+            </>
+          )}
       </>
     );
   }
@@ -366,6 +417,31 @@ export default function Game() {
           </p>
           <p>And be sure to keep an eye out for some hidden secrets!</p>
           <p>Thank you for playing!</p>
+        </div>
+      );
+    }
+
+    if (launchedNuke) {
+      return (
+        <div className={styles.died}>
+          <p>
+            Congratulations. You successfully killed everyone AGAIN! And this
+            time, you didnt manage to survive either. Womp womp! Why would you
+            even do that? You don't even deserve the chance to restart. But, I
+            guess I'll let you do it anyway.
+          </p>
+        </div>
+      );
+    }
+
+    if (secretEnding) {
+      return (
+        <div className={styles.won}>
+          <p>
+            Congratulations! By attaching The Silly Caterpillar to the nuclear
+            warhead you launched, you've brought upon a new era. Thanks to your
+            creativity society was able to rebuild.
+          </p>
         </div>
       );
     }

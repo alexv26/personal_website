@@ -80,7 +80,7 @@ export default function HomePage() {
   const nukeVideoRef = useRef();
 
   // Hardcoded launch code
-  const LAUNCH_CODE = "thesillycaterpillar";
+  const LAUNCH_CODE = "the silly caterpillar";
 
   useEffect(() => {
     if (clickCount === 3) {
