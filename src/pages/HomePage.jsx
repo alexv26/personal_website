@@ -58,11 +58,8 @@ function Countdown({ onComplete }) {
 
   return (
     <div className={styles.countdown}>
-      <h1
-        className="glitch"
-        data-text={`☢️ Nuke Incoming In: ${seconds}.${milliseconds} seconds ☠️`}
-      >
-        ☢️ Nuke Incoming In: {seconds}.{milliseconds} seconds ☠️
+      <h1 className={styles.countdownHeader}>
+        ☢️ Nuke Launch In: {seconds}.{milliseconds} seconds ☠️
       </h1>
     </div>
   );
@@ -73,12 +70,17 @@ export default function HomePage() {
   const [clickCount, setClickCount] = useState(0);
   const [nukeActive, setNukeActive] = useState(false);
   const [showNukeVideo, setShowNukeVideo] = useState(false);
-  const [showGlitchVideo, setShowGlitchVideo] = useState(false);
+  const [showCountdown, setShowCountdown] = useState(false);
+  const [launchCodeInput, setLaunchCodeInput] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const initialAudioRef = useRef();
   const nukeAudioRef = useRef();
   const glitchAudioRef = useRef();
   const nukeVideoRef = useRef();
+
+  // Hardcoded launch code
+  const LAUNCH_CODE = "velsmid";
 
   useEffect(() => {
     if (clickCount === 3) {
@@ -88,10 +90,33 @@ export default function HomePage() {
 
   useEffect(() => {
     if (nukeActive) {
-      // Play initial countdown audio
+      // Play initial audio
       initialAudioRef.current?.play();
+
+      // After 4 seconds, show countdown
+      const timer = setTimeout(() => {
+        setShowCountdown(true);
+      }, 3000);
+
+      // Cleanup timeout if unmounted or nukeActive changes
+      return () => clearTimeout(timer);
+    } else {
+      // Reset countdown display if nuke is not active
+      setShowCountdown(false);
     }
   }, [nukeActive]);
+
+  function onNukeVideoEnded() {
+    if (initialAudioRef.current) {
+      initialAudioRef.current.pause();
+      initialAudioRef.current.currentTime = 0;
+    }
+    setShowNukeVideo(false);
+    nukeAudioRef.current?.pause();
+    nukeAudioRef.current.currentTime = 0;
+    document.body.style.overflow = "auto";
+    window.location.href = "./#/game";
+  }
 
   function handleCountdownComplete() {
     // Lock scroll and show video
@@ -106,24 +131,15 @@ export default function HomePage() {
     }, 100); // slight delay to sync with video
   }
 
-  function onNukeVideoEnded() {
-    if (initialAudioRef.current) {
-      initialAudioRef.current.pause();
-      initialAudioRef.current.currentTime = 0;
+  function handleLaunchCodeSubmit(e) {
+    e.preventDefault();
+    if (launchCodeInput === LAUNCH_CODE) {
+      setNukeActive(true);
+      setErrorMessage("");
+    } else {
+      setErrorMessage("Incorrect launch code!");
     }
-    setShowNukeVideo(false);
-    nukeAudioRef.current?.pause();
-    nukeAudioRef.current.currentTime = 0;
-    document.body.style.overflow = "auto";
-    window.location.href = "./#/game";
-  }
-
-  function onGlitchVideoEnded() {
-    glitchAudioRef.current?.pause();
-    glitchAudioRef.current.currentTime = 0;
-
-    document.body.style.overflow = "auto";
-    window.location.href = "./#/game";
+    setLaunchCodeInput("");
   }
 
   return (
@@ -208,11 +224,24 @@ export default function HomePage() {
           </FadeInSection>
         </div>
 
-        {secretButtonIsVisible && (
+        {secretButtonIsVisible && !nukeActive && (
           <div className={styles.secretButton}>
-            <FadeInSection>
-              <button onClick={() => setNukeActive(true)}>☢️</button>
-            </FadeInSection>
+            <form onSubmit={handleLaunchCodeSubmit}>
+              <input
+                type="text"
+                value={launchCodeInput}
+                onChange={(e) => setLaunchCodeInput(e.target.value)}
+                placeholder="Enter Launch Code"
+                className={styles.launchCodeInput}
+                autoFocus
+              />
+              <button type="submit" className={styles.launchCodeButton}>
+                Launch
+              </button>
+              {errorMessage && (
+                <div className={styles.errorText}>{errorMessage}</div>
+              )}
+            </form>
           </div>
         )}
 
@@ -226,7 +255,7 @@ export default function HomePage() {
             />
 
             {/* Countdown */}
-            {!showNukeVideo && !showGlitchVideo && (
+            {!showNukeVideo && showCountdown && (
               <Countdown onComplete={handleCountdownComplete} />
             )}
 

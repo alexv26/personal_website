@@ -103,9 +103,40 @@
   margin-bottom: 40px;
 }
 
-.secretButton button {
-  background: none;
-  font-size: 3rem;
+.launchCodeInput {
+  padding: 0.5rem 1rem;
+  font-size: 1.25rem;
+  border: 2px solid #ff7f50;
+  border-radius: 6px;
+  outline: none;
+  width: 200px;
+  margin-right: 0.5rem;
+}
+
+.launchCodeInput:focus {
+  border-color: #ff5722;
+  box-shadow: 0 0 8px #ff5722;
+}
+
+.launchCodeButton {
+  padding: 0.5rem 1.5rem;
+  font-size: 1.25rem;
+  background-color: #ff7f50;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.launchCodeButton:hover {
+  background-color: #ff5722;
+}
+.errorText {
+  color: #ff4c4c; /* bright red */
+  margin-top: 0.5rem;
+  font-weight: bold;
+  font-size: 1rem;
 }
 
 .countdown {
@@ -124,6 +155,13 @@
   box-shadow: 0 0 30px red;
   text-align: center;
   animation: pulse 1s infinite;
+  background: repeating-linear-gradient(
+    to bottom,
+    black,
+    black 2px,
+    #1a1a1a 2px,
+    #1a1a1a 4px
+  );
 }
 
 @keyframes pulse {
@@ -135,6 +173,26 @@
   }
   100% {
     box-shadow: 0 0 20px red;
+  }
+}
+
+.countdownHeader {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 3rem;
+  font-weight: bold;
+  color: #ff3c3c;
+  text-shadow: 0 0 10px red, 0 0 20px red, 0 0 30px darkred;
+  animation: flicker 0.15s infinite alternate;
+  letter-spacing: 1px;
+}
+
+@keyframes flicker {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0.9;
+    text-shadow: 0 0 5px #ff1c1c, 0 0 15px #ff1c1c, 0 0 20px darkred;
   }
 }
 
