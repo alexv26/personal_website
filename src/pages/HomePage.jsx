@@ -80,7 +80,7 @@ export default function HomePage() {
   const nukeVideoRef = useRef();
 
   // Hardcoded launch code
-  const LAUNCH_CODE = "velsmid";
+  const LAUNCH_CODE = "thesillycaterpillar";
 
   useEffect(() => {
     if (clickCount === 3) {
@@ -133,7 +133,7 @@ export default function HomePage() {
 
   function handleLaunchCodeSubmit(e) {
     e.preventDefault();
-    if (launchCodeInput === LAUNCH_CODE) {
+    if (launchCodeInput.toLowerCase() === LAUNCH_CODE) {
       setNukeActive(true);
       setErrorMessage("");
     } else {
@@ -181,47 +181,44 @@ export default function HomePage() {
         </div>
 
         <div id="about" className={styles.blocks}>
-          <FadeInSection>
-            <Block
-              imgSrc={`${publicUrl}/assets/alex.jpeg`}
-              header="My Info"
-              subheading={
-                "B.S. Computer Science, with a Minor in Management and Leadership at Boston College"
-              }
-              subsubheading={"Co-Captain of Outdoor Adventures"}
-              text={[
-                { bold: "Email", text: "velsmida@bc.edu", link: false },
-                {
-                  bold: "Github",
-                  text: "https://github.com/alexv26",
-                  linkTo: "https://github.com/alexv26",
-                  link: true,
-                },
-                {
-                  bold: "Linkedin",
-                  text: "https://www.linkedin.com/in/alexander-velsmid/",
-                  linkTo: "https://www.linkedin.com/in/alexander-velsmid/",
-                  link: true,
-                },
-              ]}
-            />
-          </FadeInSection>
-          <FadeInSection>
-            <Block
-              imgSrc={`${publicUrl}/assets/with_friends.JPG`}
-              header="About Me"
-              text={[
-                {
-                  text: "I am a rising senior at Boston College, studying Computer Science (BS) and pursuing a minor in Management and Leadership. Throughout my life I have been interested in problem-solving, and CS is the perfect way for me to turn this interest into a career.",
-                },
-                {
-                  text: "Read more...",
-                  link: true,
-                  linkTo: "./#/about",
-                },
-              ]}
-            />
-          </FadeInSection>
+          <Block
+            imgSrc={`${publicUrl}/assets/alex.jpeg`}
+            header="My Info"
+            subheading={
+              "B.S. Computer Science, with a Minor in Management and Leadership at Boston College"
+            }
+            subsubheading={"Co-Captain of Outdoor Adventures"}
+            text={[
+              { bold: "Email", text: "velsmida@bc.edu", link: false },
+              {
+                bold: "Github",
+                text: "https://github.com/alexv26",
+                linkTo: "https://github.com/alexv26",
+                link: true,
+              },
+              {
+                bold: "Linkedin",
+                text: "https://www.linkedin.com/in/alexander-velsmid/",
+                linkTo: "https://www.linkedin.com/in/alexander-velsmid/",
+                link: true,
+              },
+            ]}
+          />
+
+          <Block
+            imgSrc={`${publicUrl}/assets/with_friends.JPG`}
+            header="About Me"
+            text={[
+              {
+                text: "I am a rising senior at Boston College, studying Computer Science (BS) and pursuing a minor in Management and Leadership. Throughout my life I have been interested in problem-solving, and CS is the perfect way for me to turn this interest into a career.",
+              },
+              {
+                text: "Read more...",
+                link: true,
+                linkTo: "./#/about",
+              },
+            ]}
+          />
         </div>
 
         {secretButtonIsVisible && !nukeActive && (

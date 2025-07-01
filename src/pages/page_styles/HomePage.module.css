@@ -69,9 +69,10 @@
   flex-wrap: wrap; /* allow them to wrap to next line */
   gap: 3rem; /* space between blocks */
   justify-content: center;
-  padding: 2rem;
+  padding: 0 2rem;
   margin-top: 0;
   margin-bottom: 10vh;
+  height: 670px;
 }
 
 .fadeIn {
@@ -218,4 +219,10 @@
   object-fit: cover;
   z-index: 99999;
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .blocks {
+    height: fit-content;
+  }
 }
