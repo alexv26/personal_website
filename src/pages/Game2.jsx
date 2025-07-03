@@ -16,584 +16,15 @@ function ActionButton({ text, func, disabled }) {
   );
 }
 
-const gameItems = {
-  food: {
-    displayName: "Food",
-    description: "Reduces hunger and boosts health",
-    craftingRecipe: {},
-    effect: { health: +2, hunger: -10 },
-  },
-  water: {
-    displayName: "Water",
-    description: "Reduces thirst and boosts health",
-    craftingRecipe: {},
-    effect: { health: +2, thirst: -10 },
-  },
-  bandage: {
-    displayName: "bandage",
-    description: "Reduces bleed and improves health",
-    craftingRecipe: {},
-    effect: { health: +3, bleed: -10 },
-  },
-  medkit: {
-    displayName: "Med kit",
-    description: "Greatly improves health and removes bleed",
-    craftingRecipe: { bandage: 2, food: 1, water: 1 },
-    effect: { health: +3, bleed: -100 },
-  },
-  scrap: {
-    displayName: "Scrap",
-    description: "Improve shelter strength, and use to build tools",
-    craftingRecipe: {},
-    effect: { shelterStrength: +5 },
-  },
-  vicodin: {
-    displayName: "vicodin",
-    description: "Improve strength",
-    craftingRecipe: {},
-    effect: { strength: +5 },
-  },
-  radx: {
-    displayName: "RAD-X",
-    description: "Reduce radiation sickness",
-    craftingRecipe: {},
-    effect: { radiation: -10 },
-  },
-  shelterFortifications: {
-    displayName: "Shelter Fortifications",
-    description: "Greatly improve shelter strength",
-    craftingRecipe: { scrap: 5 },
-    effect: { shelterStrength: +20 },
-    statusEffects: { shelterStrength: +1 },
-  },
-  radShield: {
-    displayName: "Radiation Shield",
-    description: "Greatly reduce radiation effect",
-    craftingRecipe: { scrap: 5, radx: 5 },
-    effect: { radiation: -20 },
-    statusEffects: { radiation: +1 },
-  },
-  timeMachine: {
-    displayName: "Time Machine",
-    description: "Go back in time and prevent the nuke",
-    craftingRecipe: {
-      scrap: 100,
-      radx: 50,
-      radShield: 10,
-      vicodin: 50,
-      bandage: 50,
-      shelterFortifications: 50,
-    },
-    effect: {},
-  },
-};
+import gameItems from "../game/items_and_effects/gameItems.json";
+import initialStatusEffects from "../game/items_and_effects/initialStatusEffects.json";
 
-const initialStatusEffects = {
-  shelterStrength: {
-    displayName: "Permanent Shelter Strength Boost",
-    effectOn: "shelter strength",
-    description: "Permanently reduce future impact on shelter",
-    boost: 0.1,
-  },
-  enlightened: {
-    displayName: "Enlightened Status",
-    effectOn: "intelligence",
-    description: "Permanently improve luck on future explorations",
-    boost: 1,
-  },
-  radiation: {
-    displayName: "Permanent Radiation Effect Reduction",
-    effectOn: "radiation impact",
-    description: "Permanently reduce the effects of radiation",
-    boost: -0.1,
-  },
-  health: {
-    displayName: "Permanent Health Improvements",
-    effectOn: "health",
-    description: "Permanently reduce the effects of health damage",
-    boost: 0.1,
-  },
-};
+import initialGameState from "../game/state/initialGameState.json";
+import gameRules from "../game/rules/gameRules.json";
 
-const initialGameState = {
-  day: 1,
-  health: 100,
-  hunger: 0,
-  thirst: 0,
-  radiation: 0,
-  bleed: 0,
-  strength: 5,
-  shelterStrength: 5,
-  logs: [
-    "You take shelter in a bunker after the nuclear fallout. Everything is silent...",
-  ],
-  inventory: Object.fromEntries(Object.keys(gameItems).map((key) => [key, 0])),
-  statusEffects: Object.fromEntries(
-    Object.keys(initialStatusEffects).map((key) => [key, 0])
-  ),
-};
+import explorationEvents from "../game/events/explorationEvents.json";
 
-const gameRules = {
-  maxDailyExplorations: 3,
-  maxRadiationPunishment: 30,
-  maxHungerPunishment: 10,
-  maxThirstPunishment: 10,
-  nightlyHungerIncrease: 5,
-  nightlyThirstIncrease: 5,
-  baseRestEventChances: {
-    negativeShelterEvents: 0.35,
-    positiveShelterEvents: 0.1,
-    invadeEvents: 0.35,
-    randomWorldEvents: 0.15,
-    rareEvents: 0.05,
-  },
-  bounds: {
-    strength: { min: 0, max: 100 },
-    shelterStrength: { min: 0, max: 100 },
-    health: { min: 0, max: 100 },
-  },
-  statusEffectBounds: {
-    radiation: { min: 0, max: 10 },
-    enlightened: { min: 0, max: 1 },
-    shelterStrength: { min: 0, max: 10 },
-    health: { min: 0, max: 10 },
-  },
-};
-
-const explorationEvents = {
-  burntLibrary: {
-    id: "burntLibrary",
-    text: "A half-collapsed library smolders nearby.",
-    choices: [
-      {
-        text: "Search the ruins",
-        effect: { radiation: 5, scrap: 3 },
-        logText: "Books are gone, but broken tech litters the floor.",
-      },
-      {
-        text: "Rest in the shade",
-        effect: { health: +5, thirst: +5 },
-        logText: "The cool shadow helps you rest, but you grow thirstier.",
-      },
-    ],
-  },
-
-  rustedTruck: {
-    id: "rustedTruck",
-    text: "A rusted military truck sits half-buried in sand.",
-    choices: [
-      {
-        text: "Pop open the back",
-        effect: { vicodin: 1, health: -5 },
-        logText: "You cut yourself, but find vicodin in a crate.",
-      },
-      {
-        text: "Search under the hood",
-        effect: { scrap: 4 },
-        logText: "You yank out wires and panels.",
-      },
-    ],
-  },
-
-  collapsedShack: {
-    id: "collapsedShack",
-    text: "A wooden shack leans dangerously to one side.",
-    choices: [
-      {
-        text: "Enter cautiously",
-        effect: { bandage: 1, health: -3 },
-        logText: "A beam falls — but you salvage some bandages.",
-      },
-      {
-        text: "Take the door off its hinges",
-        effect: { scrap: 3 },
-        logText: "The wood's rotted, but still usable as material.",
-      },
-    ],
-  },
-
-  boneField: {
-    id: "boneField",
-    text: "An open field is littered with sun-bleached bones.",
-    choices: [
-      {
-        text: "Dig around",
-        effect: { food: 1, radiation: 3 },
-        logText: "A can of rations lies buried near a corpse.",
-      },
-      {
-        text: "Use it as a shortcut",
-        effect: { strength: +2, radiation: +5 },
-        logText: "You power through but inhale radioactive dust.",
-      },
-    ],
-  },
-
-  brokenElevator: {
-    id: "brokenElevator",
-    text: "A mall elevator shaft lies open before you.",
-    choices: [
-      {
-        text: "Climb down the cables",
-        effect: { health: -5, radx: 1 },
-        logText: "It was risky, but you find RAD-X in a storage room.",
-      },
-      {
-        text: "Search the lobby",
-        effect: { food: 1, water: 1 },
-        logText: "The food court is looted, but scraps remain.",
-      },
-    ],
-  },
-
-  dryWell: {
-    id: "dryWell",
-    text: "An old well stands cracked and empty.",
-    choices: [
-      {
-        text: "Shout into the well",
-        effect: { strength: +1 },
-        logText: "You scream your frustrations into the void. It helps.",
-      },
-      {
-        text: "Climb inside",
-        effect: { radiation: 7, scrap: 2 },
-        logText: "A small stash was hidden inside — and so was mold.",
-      },
-    ],
-  },
-
-  skeletonWithNote: {
-    id: "skeletonWithNote",
-    text: "A skeleton sits against a tree, clutching a faded note.",
-    choices: [
-      {
-        text: "Read the note",
-        effect: { enlightened: 1 },
-        logText: "The final words shift something in you. You feel wiser.",
-      },
-      {
-        text: "Check its pockets",
-        effect: { food: 1, water: 1 },
-        logText: "You find half a protein bar and a water flask.",
-      },
-    ],
-  },
-
-  floodedBasement: {
-    id: "floodedBasement",
-    text: "A building basement is flooded with murky water.",
-    choices: [
-      {
-        text: "Wade through it",
-        effect: { water: 2, radiation: 10 },
-        logText: "You collect some contaminated bottles.",
-      },
-      {
-        text: "Siphon water from the surface",
-        effect: { water: 1 },
-        logText: "Still gross, but safer than diving in.",
-      },
-    ],
-  },
-
-  lockedLocker: {
-    id: "lockedLocker",
-    text: "You find a locker sealed shut.",
-    choices: [
-      {
-        text: "Force it open",
-        effect: { health: -3, scrap: 2, bandage: 1 },
-        logText: "You bust it open with effort — and injure yourself.",
-      },
-      {
-        text: "Leave it be",
-        effect: { hunger: +5 },
-        logText: "You leave it behind, but the missed opportunity stings.",
-      },
-    ],
-  },
-
-  factoryYard: {
-    id: "factoryYard",
-    text: "A sprawling factory yard creaks in the wind.",
-    choices: [
-      {
-        text: "Climb the scaffolding",
-        effect: { strength: +3, health: -5 },
-        logText: "You strengthen your arms — and twist your ankle.",
-      },
-      {
-        text: "Search the dumpsters",
-        effect: { scrap: 3, radx: 1 },
-        logText: "Rotting metal... and a vial of RAD-X underneath.",
-      },
-    ],
-  },
-
-  scorchedTree: {
-    id: "scorchedTree",
-    text: "A tree is blackened and twisted from fallout.",
-    choices: [
-      {
-        text: "Collect bark",
-        effect: { food: 1 },
-        logText: "The bark burns oddly — but it’s edible in a pinch.",
-      },
-      {
-        text: "Rest under it",
-        effect: { radiation: 5 },
-        logText: "The roots still glow. Not safe at all.",
-      },
-    ],
-  },
-
-  rooftopGarden: {
-    id: "rooftopGarden",
-    text: "You spot a rooftop garden hidden among debris.",
-    choices: [
-      {
-        text: "Harvest what’s left",
-        effect: { food: 2 },
-        logText: "A few carrots and herbs are still alive.",
-      },
-      {
-        text: "Dig in the dirt",
-        effect: { radx: 1, scrap: 1 },
-        logText: "A buried stash contains a single RAD-X dose.",
-      },
-    ],
-  },
-
-  smashedConsole: {
-    id: "smashedConsole",
-    text: "A glowing console lies cracked in the road.",
-    choices: [
-      {
-        text: "Touch the panel",
-        effect: { radiation: 10, vicodin: 1 },
-        logText: "Pain shoots through you, but you black out holding vicodin.",
-      },
-      {
-        text: "Smash it further",
-        effect: { scrap: 4 },
-        logText: "You bash it apart and grab the pieces.",
-      },
-    ],
-  },
-
-  barricadedDoor: {
-    id: "barricadedDoor",
-    text: "A door is nailed shut with planks and barbed wire.",
-    choices: [
-      {
-        text: "Rip it open",
-        effect: { health: -7, food: 2 },
-        logText: "You’re bleeding... but there's food inside.",
-      },
-      {
-        text: "Peek through a crack",
-        effect: { hunger: +2 },
-        logText: "You see supplies, but can't reach them.",
-      },
-    ],
-  },
-
-  powerStation: {
-    id: "powerStation",
-    text: "A busted power station buzzes with residual energy.",
-    choices: [
-      {
-        text: "Search the control room",
-        effect: { radiation: 6, scrap: 5 },
-        logText: "You fry your Geiger counter but leave with scrap.",
-      },
-      {
-        text: "Wait for it to cool down",
-        effect: { nothing: true },
-        logText: "It never does. You waste precious time.",
-      },
-    ],
-  },
-};
-
-const restEvents = {
-  negativeShelterEvents: {
-    waterLeak: {
-      id: "waterLeak",
-      text: "It rains and irradiated water leaks into your shelter. You are cold and sick.",
-      effect: { health: -5, radiation: +5 },
-    },
-    highWind: {
-      id: "highWind",
-      text: "High winds blow away parts of your shelter.",
-      effect: { shelterStrength: -5 },
-    },
-    rodentInfestation: {
-      id: "rodentInfestation",
-      text: "You wake up to find rats chewing your supplies.",
-      effect: { food: -2, health: -3 },
-    },
-    moldOutbreak: {
-      id: "moldOutbreak",
-      text: "The shelter walls grow slimy with mold.",
-      effect: { health: -4 },
-    },
-    roofCollapse: {
-      id: "roofCollapse",
-      text: "A section of the ceiling collapses in the night.",
-      effect: { shelterStrength: -10, health: -3 },
-    },
-    gasLeak: {
-      id: "gasLeak",
-      text: "A chemical smell fills the bunker. You feel dizzy.",
-      effect: { health: -6, thirst: +3 },
-    },
-    bugBiteInfection: {
-      id: "bugBiteInfection",
-      text: "Something bit you. It's swelling fast.",
-      effect: { health: -4, bleed: +2 },
-    },
-  },
-  positiveShelterEvents: {
-    wokenByStorm: {
-      id: "wokenByStorm",
-      text: "Thunder shakes your shelter. You barely sleep.",
-      effect: { strength: -2 },
-    },
-    sleepwalkingAccident: {
-      id: "sleepwalkingAccident",
-      text: "You wake up with a bruised leg and no memory.",
-      effect: { health: -2 },
-    },
-    calmNight: {
-      id: "calmNight",
-      text: "Nothing happens. For once, you rest well.",
-      effect: { health: +5 },
-    },
-  },
-  invadeEvents: {
-    mutantRaid: {
-      id: "mutantRaid",
-      text: "Something claws at the bunker door. You brace it shut.",
-      effect: { shelterStrength: -10, health: -2 },
-    },
-    scavengerBreakIn: {
-      id: "scavengerBreakIn",
-      text: "A figure breaks in and grabs supplies before fleeing.",
-      effect: { food: -2, water: -2 },
-    },
-    wildDogAttack: {
-      id: "wildDogAttack",
-      text: "A pack of wild dogs gnaws at the shelter entrance.",
-      effect: { health: -3, shelterStrength: -5 },
-    },
-    intruderWarning: {
-      id: "intruderWarning",
-      text: "Footsteps pass near your shelter. You hold your breath.",
-      effect: { strength: -1 },
-    },
-    suppliesPoisoned: {
-      id: "suppliesPoisoned",
-      text: "A raider slipped something into your food.",
-      effect: { food: -1, health: -6 },
-    },
-    noiseDistraction: {
-      id: "noiseDistraction",
-      text: "A loud bang outside keeps you awake.",
-      effect: { strength: -2 },
-    },
-    camperDispute: {
-      id: "camperDispute",
-      text: "Someone demands more food. Tension rises.",
-      effect: { food: -1, strength: -1 },
-    },
-    airFilterFailure: {
-      id: "airFilterFailure",
-      text: "Your filter malfunctions. You cough through the night.",
-      effect: { radiation: +5 },
-    },
-  },
-  randomWorldEvents: {
-    tickleMonster: {
-      id: "tickleMonster",
-      text: "You are visited by the ticklemonster. He is harmless.",
-      effect: {},
-    },
-    radioStatic: {
-      id: "radioStatic",
-      text: "Faint radio static echoes. You can’t sleep.",
-      effect: { strength: -1 },
-    },
-    strangeDreams: {
-      id: "strangeDreams",
-      text: "You dream of green fields and blue skies.",
-      effect: { health: +2 },
-    },
-    meteorShower: {
-      id: "meteorShower",
-      text: "You watch streaks of fire paint the sky.",
-      effect: { radiation: +2 },
-    },
-    coldSnap: {
-      id: "coldSnap",
-      text: "The temperature drops suddenly. You shiver all night.",
-      effect: { health: -5 },
-    },
-    cometGlimpse: {
-      id: "cometGlimpse",
-      text: "You glimpse a comet. You feel lucky.",
-      effect: { strength: +1 },
-    },
-    nightWhispers: {
-      id: "nightWhispers",
-      text: "You hear whispers in the dark. You're unsure if they're real.",
-      effect: { strength: -1, enlightened: +1 },
-    },
-    oldMemories: {
-      id: "oldMemories",
-      text: "You find a photo from before. It breaks you.",
-      effect: { strength: -2 },
-    },
-    hopefulBirdsong: {
-      id: "hopefulBirdsong",
-      text: "You hear birds. Maybe life will return.",
-      effect: { strength: +2 },
-    },
-    eerieSilence: {
-      id: "eerieSilence",
-      text: "Not a sound all night. It's unnerving.",
-      effect: { strength: -1 },
-    },
-  },
-  rareEvents: {
-    giftFromStranger: {
-      id: "giftFromStranger",
-      text: "You wake to find a medkit and some food outside.",
-      effect: { medkit: +1, food: +3 },
-    },
-    travelersDiary: {
-      id: "travelersDiary",
-      text: "You find a hidden journal. It changes your outlook.",
-      effect: { enlightened: +1 },
-    },
-    fungusBloom: {
-      id: "fungusBloom",
-      text: "Bioluminescent fungus grows on the wall. You harvest it.",
-      effect: { food: +2, radiation: +1 },
-    },
-    ancientTechCache: {
-      id: "ancientTechCache",
-      text: "You find a sealed crate of pre-war tech.",
-      effect: { vicodin: +1, radx: +1, scrap: +2 },
-    },
-    guardianSpirit: {
-      id: "guardianSpirit",
-      text: "You feel watched... but protected.",
-      effect: { permaShelterStrengthBoost: +1 },
-    },
-  },
-};
+import restEvents from "../game/events/restEvents.json";
 
 const getRandomExplorationEvent = () => {
   const values = Object.values(explorationEvents); // convert object to array
@@ -1133,7 +564,7 @@ export default function Game2() {
     });
   };
 
-  const applyChoiceEffect = (effect, logText) => {
+  const applyChoiceEffect = (effect, isStatusEffect, logText) => {
     setGameState((prev) => {
       const newInventory = { ...prev.inventory };
       const newStatusEffects = { ...prev.statusEffects };
@@ -1152,29 +583,35 @@ export default function Game2() {
         }
         const value = adjustedValue ?? val;
 
-        if (key in updatedState) {
-          updatedState[key] += value;
-          // impose bounds
-          if (gameRules.bounds[key]) {
-            const { min, max } = gameRules.bounds[key];
-            updatedState[key] = Math.max(min, Math.min(max, updatedState[key]));
-          }
-          effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${key}`);
-        } else if (key in newInventory) {
-          newInventory[key] += value;
-          // apply item bounds
-          if (gameRules.bounds[key]) {
-            const { min, max } = gameRules.bounds[key];
-            newInventory[key] = Math.max(
-              min,
-              Math.min(max, updatedInventory[key])
-            );
-          } else if (newInventory[key] < 0) newInventory[key] = 0;
+        if (!isStatusEffect) {
+          if (key in updatedState) {
+            updatedState[key] += value;
+            // impose bounds
+            if (gameRules.bounds[key]) {
+              const { min, max } = gameRules.bounds[key];
+              updatedState[key] = Math.max(
+                min,
+                Math.min(max, updatedState[key])
+              );
+            }
+            effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${key}`);
+          } else if (key in newInventory) {
+            newInventory[key] += value;
+            // apply item bounds
+            if (gameRules.bounds[key]) {
+              const { min, max } = gameRules.bounds[key];
+              newInventory[key] = Math.max(
+                min,
+                Math.min(max, updatedInventory[key])
+              );
+            } else if (newInventory[key] < 0) newInventory[key] = 0;
 
-          effectSummary.push(
-            `${value >= 0 ? "+" : ""}${value} ${gameItems[key].displayName}`
-          );
-        } else if (key in newStatusEffects) {
+            effectSummary.push(
+              `${value >= 0 ? "+" : ""}${value} ${gameItems[key].displayName}`
+            );
+          }
+        }
+        if (isStatusEffect && key in newStatusEffects) {
           newStatusEffects[key] += value;
           if (gameRules.statusEffectBounds[key]) {
             const { min, max } = gameRules.statusEffectBounds[key];
@@ -1209,11 +646,11 @@ export default function Game2() {
     console.log(effects);
     console.log(statusEffects);
     if (effects) {
-      applyChoiceEffect(effects, `You used a ${item.displayName}`);
+      applyChoiceEffect(effects, false, `You used a ${item.displayName}`);
     }
     if (statusEffects) {
       console.log(statusEffects);
-      applyChoiceEffect(statusEffects, "");
+      applyChoiceEffect(statusEffects, true, "");
     }
 
     setGameState((prev) => {
@@ -1278,6 +715,7 @@ export default function Game2() {
                   func={() =>
                     applyChoiceEffect(
                       choice.effect || {},
+                      false,
                       choice.logText || "You chose an action."
                     )
                   }
@@ -1409,6 +847,7 @@ export default function Game2() {
     const event = getRandomRestEvent(gameState);
     applyChoiceEffect(
       event.effect || {},
+      false,
       `Night ${gameState.day}. ${event.text}`
     );
 

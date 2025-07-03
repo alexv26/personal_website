@@ -1,0 +1,71 @@
+{
+  "food": {
+    "displayName": "Food",
+    "description": "Reduces hunger and boosts health",
+    "craftingRecipe": {},
+    "effect": { "health": 2, "hunger": -10 }
+  },
+  "water": {
+    "displayName": "Water",
+    "description": "Reduces thirst and boosts health",
+    "craftingRecipe": {},
+    "effect": { "health": 2, "thirst": -10 }
+  },
+  "bandage": {
+    "displayName": "bandage",
+    "description": "Reduces bleed and improves health",
+    "craftingRecipe": {},
+    "effect": { "health": 3, "bleed": -10 }
+  },
+  "medkit": {
+    "displayName": "Med kit",
+    "description": "Greatly improves health and removes bleed",
+    "craftingRecipe": { "bandage": 2, "food": 1, "water": 1 },
+    "effect": { "health": 3, "bleed": -100 }
+  },
+  "scrap": {
+    "displayName": "Scrap",
+    "description": "Improve shelter strength, and use to build tools",
+    "craftingRecipe": {},
+    "effect": { "shelterStrength": 5 }
+  },
+  "vicodin": {
+    "displayName": "vicodin",
+    "description": "Improve strength",
+    "craftingRecipe": {},
+    "effect": { "strength": 5 }
+  },
+  "radx": {
+    "displayName": "RAD-X",
+    "description": "Reduce radiation sickness",
+    "craftingRecipe": {},
+    "effect": { "radiation": -10 }
+  },
+  "shelterFortifications": {
+    "displayName": "Shelter Fortifications",
+    "description": "Greatly improve shelter strength",
+    "craftingRecipe": { "scrap": 5 },
+    "effect": { "shelterStrength": 20 },
+    "statusEffects": { "shelterStrength": 1 }
+  },
+  "radShield": {
+    "displayName": "Radiation Shield",
+    "description": "Greatly reduce radiation effect",
+    "craftingRecipe": { "scrap": 5, "radx": 5 },
+    "effect": { "radiation": -20 },
+    "statusEffects": { "radiation": 1 }
+  },
+  "timeMachine": {
+    "displayName": "Time Machine",
+    "description": "Go back in time and prevent the nuke",
+    "craftingRecipe": {
+      "scrap": 100,
+      "radx": 50,
+      "radShield": 10,
+      "vicodin": 50,
+      "bandage": 50,
+      "shelterFortifications": 50
+    },
+    "effect": {}
+  }
+}

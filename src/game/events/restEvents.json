@@ -1,0 +1,177 @@
+{
+  "negativeShelterEvents": {
+    "waterLeak": {
+      "id": "waterLeak",
+      "text": "It rains and irradiated water leaks into your shelter. You are cold and sick.",
+      "effect": { "health": -5, "radiation": 5 }
+    },
+    "highWind": {
+      "id": "highWind",
+      "text": "High winds blow away parts of your shelter.",
+      "effect": { "shelterStrength": -5 }
+    },
+    "rodentInfestation": {
+      "id": "rodentInfestation",
+      "text": "You wake up to find rats chewing your supplies.",
+      "effect": { "food": -2, "health": -3 }
+    },
+    "moldOutbreak": {
+      "id": "moldOutbreak",
+      "text": "The shelter walls grow slimy with mold.",
+      "effect": { "health": -4 }
+    },
+    "roofCollapse": {
+      "id": "roofCollapse",
+      "text": "A section of the ceiling collapses in the night.",
+      "effect": { "shelterStrength": -10, "health": -3 }
+    },
+    "gasLeak": {
+      "id": "gasLeak",
+      "text": "A chemical smell fills the bunker. You feel dizzy.",
+      "effect": { "health": -6, "thirst": 3 }
+    },
+    "bugBiteInfection": {
+      "id": "bugBiteInfection",
+      "text": "Something bit you. It's swelling fast.",
+      "effect": { "health": -4, "bleed": 2 }
+    }
+  },
+  "positiveShelterEvents": {
+    "wokenByStorm": {
+      "id": "wokenByStorm",
+      "text": "Thunder shakes your shelter. You barely sleep.",
+      "effect": { "strength": -2 }
+    },
+    "sleepwalkingAccident": {
+      "id": "sleepwalkingAccident",
+      "text": "You wake up with a bruised leg and no memory.",
+      "effect": { "health": -2 }
+    },
+    "calmNight": {
+      "id": "calmNight",
+      "text": "Nothing happens. For once, you rest well.",
+      "effect": { "health": 5 }
+    }
+  },
+  "invadeEvents": {
+    "mutantRaid": {
+      "id": "mutantRaid",
+      "text": "Something claws at the bunker door. You brace it shut.",
+      "effect": { "shelterStrength": -10, "health": -2 }
+    },
+    "scavengerBreakIn": {
+      "id": "scavengerBreakIn",
+      "text": "A figure breaks in and grabs supplies before fleeing.",
+      "effect": { "food": -2, "water": -2 }
+    },
+    "wildDogAttack": {
+      "id": "wildDogAttack",
+      "text": "A pack of wild dogs gnaws at the shelter entrance.",
+      "effect": { "health": -3, "shelterStrength": -5 }
+    },
+    "intruderWarning": {
+      "id": "intruderWarning",
+      "text": "Footsteps pass near your shelter. You hold your breath.",
+      "effect": { "strength": -1 }
+    },
+    "suppliesPoisoned": {
+      "id": "suppliesPoisoned",
+      "text": "A raider slipped something into your food.",
+      "effect": { "food": -1, "health": -6 }
+    },
+    "noiseDistraction": {
+      "id": "noiseDistraction",
+      "text": "A loud bang outside keeps you awake.",
+      "effect": { "strength": -2 }
+    },
+    "camperDispute": {
+      "id": "camperDispute",
+      "text": "Someone demands more food. Tension rises.",
+      "effect": { "food": -1, "strength": -1 }
+    },
+    "airFilterFailure": {
+      "id": "airFilterFailure",
+      "text": "Your filter malfunctions. You cough through the night.",
+      "effect": { "radiation": 5 }
+    }
+  },
+  "randomWorldEvents": {
+    "tickleMonster": {
+      "id": "tickleMonster",
+      "text": "You are visited by the ticklemonster. He is harmless.",
+      "effect": {}
+    },
+    "radioStatic": {
+      "id": "radioStatic",
+      "text": "Faint radio static echoes. You can’t sleep.",
+      "effect": { "strength": -1 }
+    },
+    "strangeDreams": {
+      "id": "strangeDreams",
+      "text": "You dream of green fields and blue skies.",
+      "effect": { "health": 2 }
+    },
+    "meteorShower": {
+      "id": "meteorShower",
+      "text": "You watch streaks of fire paint the sky.",
+      "effect": { "radiation": 2 }
+    },
+    "coldSnap": {
+      "id": "coldSnap",
+      "text": "The temperature drops suddenly. You shiver all night.",
+      "effect": { "health": -5 }
+    },
+    "cometGlimpse": {
+      "id": "cometGlimpse",
+      "text": "You glimpse a comet. You feel lucky.",
+      "effect": { "strength": 1 }
+    },
+    "nightWhispers": {
+      "id": "nightWhispers",
+      "text": "You hear whispers in the dark. You're unsure if they're real.",
+      "effect": { "strength": -1, "enlightened": 1 }
+    },
+    "oldMemories": {
+      "id": "oldMemories",
+      "text": "You find a photo from before. It breaks you.",
+      "effect": { "strength": -2 }
+    },
+    "hopefulBirdsong": {
+      "id": "hopefulBirdsong",
+      "text": "You hear birds. Maybe life will return.",
+      "effect": { "strength": 2 }
+    },
+    "eerieSilence": {
+      "id": "eerieSilence",
+      "text": "Not a sound all night. It's unnerving.",
+      "effect": { "strength": -1 }
+    }
+  },
+  "rareEvents": {
+    "giftFromStranger": {
+      "id": "giftFromStranger",
+      "text": "You wake to find a medkit and some food outside.",
+      "effect": { "medkit": 1, "food": 3 }
+    },
+    "travelersDiary": {
+      "id": "travelersDiary",
+      "text": "You find a hidden journal. It changes your outlook.",
+      "effect": { "enlightened": 1 }
+    },
+    "fungusBloom": {
+      "id": "fungusBloom",
+      "text": "Bioluminescent fungus grows on the wall. You harvest it.",
+      "effect": { "food": 2, "radiation": 1 }
+    },
+    "ancientTechCache": {
+      "id": "ancientTechCache",
+      "text": "You find a sealed crate of pre-war tech.",
+      "effect": { "vicodin": 1, "radx": 1, "scrap": 2 }
+    },
+    "guardianSpirit": {
+      "id": "guardianSpirit",
+      "text": "You feel watched... but protected.",
+      "effect": { "permaShelterStrengthBoost": 1 }
+    }
+  }
+}

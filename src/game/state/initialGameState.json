@@ -1,0 +1,31 @@
+{
+  "day": 1,
+  "health": 100,
+  "hunger": 0,
+  "thirst": 0,
+  "radiation": 0,
+  "bleed": 0,
+  "strength": 5,
+  "shelterStrength": 5,
+  "logs": [
+    "You take shelter in a bunker after the nuclear fallout. Everything is silent..."
+  ],
+  "inventory": {
+    "food": 0,
+    "water": 0,
+    "bandage": 0,
+    "medkit": 0,
+    "scrap": 0,
+    "vicodin": 0,
+    "radx": 0,
+    "shelterFortifications": 0,
+    "radShield": 0,
+    "timeMachine": 0
+  },
+  "statusEffects": {
+    "shelterStrength": 0,
+    "enlightened": 0,
+    "radiation": 0,
+    "health": 0
+  }
+}

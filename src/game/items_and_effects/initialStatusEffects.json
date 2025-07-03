@@ -1,0 +1,26 @@
+{
+  "shelterStrength": {
+    "displayName": "Permanent Shelter Strength Boost",
+    "effectOn": "shelter strength",
+    "description": "Permanently reduce future impact on shelter",
+    "boost": 0.1
+  },
+  "enlightened": {
+    "displayName": "Enlightened Status",
+    "effectOn": "intelligence",
+    "description": "Permanently improve luck on future explorations",
+    "boost": 1
+  },
+  "radiation": {
+    "displayName": "Permanent Radiation Effect Reduction",
+    "effectOn": "radiation impact",
+    "description": "Permanently reduce the effects of radiation",
+    "boost": -0.1
+  },
+  "health": {
+    "displayName": "Permanent Health Improvements",
+    "effectOn": "health",
+    "description": "Permanently reduce the effects of health damage",
+    "boost": 0.1
+  }
+}
