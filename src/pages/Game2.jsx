@@ -818,7 +818,7 @@ export default function Game2() {
   };
 
   const renderTerminal = () => {
-    if (isCrafting) {
+    if (viewingInventory || isCrafting) {
       return (
         <>
           <p
@@ -829,36 +829,75 @@ export default function Game2() {
               color: "lightblue",
             }}
           >
-            Crafting Recipes
+            <strong>Inventory</strong>
           </p>
-
-          {Object.entries(gameItems)
-            .filter(([_, item]) => Object.keys(item.craftingRecipe).length > 0)
-            .map(([key, item]) => (
-              <div key={key}>
+          {Object.entries(gameState.inventory).map(([item, count]) => {
+            const gameItem = gameItems[item];
+            if (!gameItem) {
+              console.warn(`Unknown item in inventory: ${item}`);
+              return null;
+            }
+            return (
+              <div key={item}>
                 <p>
-                  <strong>{item.displayName}</strong>
+                  <strong>
+                    {gameItem.displayName}:{" "}
+                    <span style={{ color: "gold" }}>{count}</span>
+                  </strong>
                 </p>
-                <p
-                  style={{
-                    color: "lightgreen",
-                    marginTop: "0",
-                    paddingTop: "0",
-                  }}
-                >
-                  {Object.entries(item.craftingRecipe)
-                    .map(
-                      ([ingredient, amount]) =>
-                        `${amount}x ${gameItems[ingredient].displayName}`
-                    )
-                    .join(", ")}
-                </p>
+                {Object.keys(gameItem.effect || {}).length > 0 && (
+                  <p
+                    style={{
+                      color: "lightgreen",
+                      marginTop: "0",
+                      paddingTop: "0",
+                    }}
+                  >
+                    Effect:{" "}
+                    {Object.entries(gameItem.effect)
+                      .map(([k, v]) => `${v > 0 ? "+" : ""}${v} ${k}`)
+                      .join(", ")}
+                  </p>
+                )}
                 <br />
               </div>
+            );
+          })}
+
+          <p
+            style={{
+              textDecoration: "underline",
+              marginTop: "5px",
+              fontWeight: "bold",
+              color: "lightblue",
+            }}
+          >
+            <strong>Item Boosts</strong>
+          </p>
+          {Object.entries(gameItems)
+            .filter(([_, item]) => item.statusEffects)
+            .map(([key, item]) => (
+              <p key={key} style={{ marginBottom: "10px" }}>
+                <strong>{item.displayName}:</strong>
+                {Object.entries(item.statusEffects).map(
+                  ([effectKey, value], i, arr) => {
+                    const effectDescription =
+                      initialStatusEffects[effectKey]?.effectOn || effectKey;
+                    return (
+                      <span key={effectKey} style={{ color: "gold" }}>
+                        {"  "}
+                        {value * 10}% {effectDescription} boost
+                        {i < arr.length - 1 ? ", " : ""}
+                      </span>
+                    );
+                  }
+                )}
+              </p>
             ))}
         </>
       );
     }
+
     return (
       <>
         {gameState.logs.map((log, index) => (
@@ -948,7 +987,7 @@ export default function Game2() {
         </div>
       );
     }
-    if (viewingInventory || isCrafting) {
+    if (isCrafting) {
       return (
         <>
           <p
@@ -959,70 +998,32 @@ export default function Game2() {
               color: "lightblue",
             }}
           >
-            <strong>Inventory</strong>
+            Crafting Recipes
           </p>
-          {Object.entries(gameState.inventory).map(([item, count]) => {
-            const gameItem = gameItems[item];
-            if (!gameItem) {
-              console.warn(`Unknown item in inventory: ${item}`);
-              return null;
-            }
-            return (
-              <div key={item}>
+
+          {Object.entries(gameItems)
+            .filter(([_, item]) => Object.keys(item.craftingRecipe).length > 0)
+            .map(([key, item]) => (
+              <div key={key}>
                 <p>
-                  <strong>
-                    {gameItem.displayName}:{" "}
-                    <span style={{ color: "gold" }}>{count}</span>
-                  </strong>
+                  <strong>{item.displayName}</strong>
                 </p>
-                {Object.keys(gameItem.effect || {}).length > 0 && (
-                  <p
-                    style={{
-                      color: "lightgreen",
-                      marginTop: "0",
-                      paddingTop: "0",
-                    }}
-                  >
-                    Effect:{" "}
-                    {Object.entries(gameItem.effect)
-                      .map(([k, v]) => `${v > 0 ? "+" : ""}${v} ${k}`)
-                      .join(", ")}
-                  </p>
-                )}
+                <p
+                  style={{
+                    color: "lightgreen",
+                    marginTop: "0",
+                    paddingTop: "0",
+                  }}
+                >
+                  {Object.entries(item.craftingRecipe)
+                    .map(
+                      ([ingredient, amount]) =>
+                        `${amount}x ${gameItems[ingredient].displayName}`
+                    )
+                    .join(", ")}
+                </p>
                 <br />
               </div>
-            );
-          })}
-
-          <p
-            style={{
-              textDecoration: "underline",
-              marginTop: "5px",
-              fontWeight: "bold",
-              color: "lightblue",
-            }}
-          >
-            <strong>Item Boosts</strong>
-          </p>
-          {Object.entries(gameItems)
-            .filter(([_, item]) => item.statusEffects)
-            .map(([key, item]) => (
-              <p key={key} style={{ marginBottom: "10px" }}>
-                <strong>{item.displayName}:</strong>
-                {Object.entries(item.statusEffects).map(
-                  ([effectKey, value], i, arr) => {
-                    const effectDescription =
-                      initialStatusEffects[effectKey]?.effectOn || effectKey;
-                    return (
-                      <span key={effectKey} style={{ color: "gold" }}>
-                        {"  "}
-                        {value * 10}% {effectDescription} boost
-                        {i < arr.length - 1 ? ", " : ""}
-                      </span>
-                    );
-                  }
-                )}
-              </p>
             ))}
         </>
       );
@@ -1202,12 +1203,13 @@ export default function Game2() {
   };
 
   const useItem = (item) => {
-    const effects = item.effect || {};
-    const statusEffects = item.statusEffects || {};
+    const effects = item.effect;
+    const statusEffects = item.statusEffects;
     if (effects) {
       applyChoiceEffect(effects, `You used a ${item.displayName}`);
     }
     if (statusEffects) {
+      console.log(statusEffects);
       applyChoiceEffect(statusEffects, "");
     }
   };
@@ -1428,7 +1430,7 @@ export default function Game2() {
   };
 
   useEffect(() => {
-    if (terminalRef.current) {
+    if (terminalRef.current && !viewingInventory && !isCrafting) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [gameState.logs]);
