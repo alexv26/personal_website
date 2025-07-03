@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import styles from "./page_styles/Game2.module.css";
+import styles from "./Game2.module.css";
 
 function ActionButton({ text, func, disabled }) {
   return (
@@ -16,15 +16,15 @@ function ActionButton({ text, func, disabled }) {
   );
 }
 
-import gameItems from "../game/items_and_effects/gameItems.json";
-import initialStatusEffects from "../game/items_and_effects/initialStatusEffects.json";
+import gameItems from "../items_and_effects/gameItems.json";
+import initialStatusEffects from "../items_and_effects/initialStatusEffects.json";
 
-import initialGameState from "../game/state/initialGameState.json";
-import gameRules from "../game/rules/gameRules.json";
+import initialGameState from "../state/initialGameState.json";
+import gameRules from "../rules/gameRules.json";
 
-import explorationEvents from "../game/events/explorationEvents.json";
+import explorationEvents from "../events/explorationEvents.json";
 
-import restEvents from "../game/events/restEvents.json";
+import restEvents from "../events/restEvents.json";
 
 const getRandomExplorationEvent = () => {
   const values = Object.values(explorationEvents); // convert object to array

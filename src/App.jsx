@@ -12,7 +12,7 @@ import About from "./pages/About";
 import Error from "./pages/Error";
 import Projects from "./pages/Projects";
 import Game from "./pages/Game";
-import Game2 from "./pages/Game2";
+import Game2 from "./game/page/Game2";
 import "./App.css";
 
 function ScrollToTop() {
