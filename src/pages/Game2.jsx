@@ -1186,6 +1186,9 @@ export default function Game2() {
           const displayName = initialStatusEffects[key]?.displayName || key;
           effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${displayName}`);
         }
+        if (isExploring) {
+          setIsExploring(false);
+        }
       });
 
       const fullLog = `${logText} (${effectSummary.join(", ")})`;
@@ -1197,14 +1200,14 @@ export default function Game2() {
         logs: [...prev.logs.slice(-4), fullLog],
       };
     });
-
-    setIsExploring(false);
-    setExplorationsToday((prev) => prev + 1);
   };
 
   const useItem = (item) => {
     const effects = item.effect;
     const statusEffects = item.statusEffects;
+
+    console.log(effects);
+    console.log(statusEffects);
     if (effects) {
       applyChoiceEffect(effects, `You used a ${item.displayName}`);
     }
@@ -1212,6 +1215,22 @@ export default function Game2() {
       console.log(statusEffects);
       applyChoiceEffect(statusEffects, "");
     }
+
+    setGameState((prev) => {
+      const newInventory = { ...prev.inventory };
+      const itemKey = Object.keys(gameItems).find(
+        (key) => gameItems[key] === item
+      );
+
+      if (itemKey && newInventory[itemKey] > 0) {
+        newInventory[itemKey] -= 1;
+      }
+
+      return {
+        ...prev,
+        inventory: newInventory,
+      };
+    });
   };
 
   const useTimeMachine = () => {
@@ -1418,11 +1437,11 @@ export default function Game2() {
   };
 
   const explore = () => {
+    console.log(explorationsToday);
     if (explorationsToday < gameRules.maxDailyExplorations) {
       setIsExploring(true);
       const exploreEvent = getRandomExplorationEvent();
       setExploreItem(exploreEvent);
-
       setExplorationsToday(explorationsToday + 1);
     } else {
       addLog(`You are to tired to explore. You must rest.`);
