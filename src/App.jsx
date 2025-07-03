@@ -1,3 +1,4 @@
+// App.jsx
 import { useState, useEffect } from "react";
 import {
   HashRouter as Router,
@@ -11,6 +12,7 @@ import About from "./pages/About";
 import Error from "./pages/Error";
 import Projects from "./pages/Projects";
 import Game from "./pages/Game";
+import Game2 from "./pages/Game2";
 import "./App.css";
 
 function ScrollToTop() {
@@ -23,13 +25,14 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
-  const [count, setCount] = useState(0);
+// ✅ Now we can use useLocation safely here
+function AppContent() {
+  const location = useLocation();
 
   return (
     <>
-      <Router>
-        <ScrollToTop />
+      <ScrollToTop />
+      {location.pathname !== "/game" && (
         <div
           className="background-image"
           style={{
@@ -38,19 +41,28 @@ function App() {
             }assets/background.jpeg')`,
           }}
         ></div>
-        <NavigationBar />
-        <div className="mainContent">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/projects" element={<Projects />} />
-            <Route path="/game" element={<Game />} />
-            <Route path="/*" element={<Error errorCode={404} />} />
-          </Routes>
-        </div>
-      </Router>
+      )}
+      {location.pathname === "/game" && <div className="backgroundColor"></div>}
+      <NavigationBar />
+      <div className="mainContent">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/projects" element={<Projects />} />
+          <Route path="/game" element={<Game2 />} />
+          <Route path="/game2" element={<Game />} />
+          <Route path="/*" element={<Error errorCode={404} />} />
+        </Routes>
+      </div>
     </>
   );
 }
 
-export default App;
+// ✅ Wrap the entire app in <Router> at the top level
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}
