@@ -12,7 +12,6 @@
   border: var(--liquid-glass-border);
   box-shadow: var(--liquid-glass-shadow);
   color: var(--liquid-glass-text-color);
-  text-shadow: var(--liquid-glass-text-shadow);
 }
 
 .flexContainer img {
@@ -38,6 +37,7 @@
   word-wrap: break-word;
   margin-bottom: 0;
   max-width: 340px;
+  text-shadow: var(--liquid-glass-text-shadow);
 }
 
 .subheader {
@@ -47,12 +47,14 @@
   word-wrap: break-word;
   margin-bottom: 0;
   max-width: 340px;
+  text-shadow: var(--liquid-glass-text-shadow);
 }
 
 .subsubheader {
   font-size: 1rem;
   margin-top: 0.1rem;
   color: rgb(143, 143, 143);
+  text-shadow: var(--liquid-glass-text-shadow);
 }
 
 .bodyText {
@@ -69,11 +71,11 @@
   margin: 0;
   font-size: 1rem;
   font-weight: normal;
+  text-shadow: var(--liquid-glass-text-shadow);
 }
 
 .bodyText a {
   color: var(--liquid-glass-text-color);
-  text-shadow: var(--liquid-glass-text-shadow);
   font-size: 1rem;
   font-weight: normal;
 }

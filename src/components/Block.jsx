@@ -35,7 +35,7 @@ export default function Block({
                 <a
                   href={text.find((e) => e.text === "Read more...").linkTo}
                   className={styles.readMore}
-                  style={{ color: "blue" }}
+                  style={{ color: "turquoise" }}
                 >
                   Read more...
                 </a>

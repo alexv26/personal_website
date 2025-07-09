@@ -162,8 +162,8 @@ export default function HomePage() {
               <div>
                 <h1>Alexander Velsmid</h1>
                 <p>
-                  Aspiring Software Engineer Dedicated to Creating Helpful
-                  Platforms and Exploring the Outdoors
+                  Aspiring Software Engineer Dedicated to Designing Meaningful
+                  Software and Exploring the Outdoors
                 </p>
                 <button
                   className={styles.cta}
