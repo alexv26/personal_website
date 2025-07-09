@@ -42,7 +42,7 @@ export default function Projects() {
             }
             imgSrc={`${publicUrl}/assets/fallout_game.png`}
             linkText="Play game"
-            linkTo={"/#/game"}
+            linkTo={"./#/game"}
           />
           <ProjectTile
             title={"TrailPlanner (WIP)"}
