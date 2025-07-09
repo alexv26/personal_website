@@ -23,7 +23,7 @@
   },
   "statusEffectBounds": {
     "radiation": { "min": 0, "max": 10 },
-    "enlightened": { "min": 0, "max": 1 },
+    "intelligence": { "min": 0, "max": 10 },
     "shelterStrength": { "min": 0, "max": 10 },
     "strength": { "min": 0, "max": 10 },
     "health": { "min": 0, "max": 10 }

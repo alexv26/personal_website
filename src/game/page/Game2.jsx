@@ -488,7 +488,7 @@ export default function Game2() {
     });
   };
 
-  const applyChoiceEffect = (effect, isStatusEffect, logText) => {
+  const applyChoiceEffect = (effect = {}, statusEffects = {}, logText) => {
     setGameState((prev) => {
       const newInventory = { ...prev.inventory };
       const newStatusEffects = { ...prev.statusEffects };
@@ -496,64 +496,67 @@ export default function Game2() {
 
       const effectSummary = [];
 
-      Object.entries(effect).forEach(([key, val]) => {
-        let adjustedValue;
-        if (key in newStatusEffects && !isStatusEffect) {
-          // status effects shouldn't apply boosts.
-          const boostPerLevel = initialStatusEffects[key]?.boost ?? 0;
-          const totalBoost = boostPerLevel * (newStatusEffects[key] ?? 0);
-          const multiplier = val > 0 ? totalBoost : totalBoost * -1;
-          adjustedValue = val + val * multiplier;
-        }
-        const value = adjustedValue ?? val;
+      const processEffect = (effectObj, isStatusEffect) => {
+        Object.entries(effectObj).forEach(([key, val]) => {
+          let adjustedValue;
+          if (key in newStatusEffects && !isStatusEffect) {
+            const boostPerLevel = initialStatusEffects[key]?.boost ?? 0;
+            const totalBoost = boostPerLevel * (newStatusEffects[key] ?? 0);
+            const multiplier = val > 0 ? totalBoost : totalBoost * -1;
+            adjustedValue = val + val * multiplier;
+          }
+          const value = adjustedValue ?? val;
 
-        if (!isStatusEffect) {
-          if (key in updatedState) {
-            updatedState[key] += value;
-            // impose bounds
-            if (gameRules.bounds[key]) {
-              const { min, max } = gameRules.bounds[key];
-              updatedState[key] = Math.max(
-                min,
-                Math.min(max, updatedState[key])
+          if (!isStatusEffect) {
+            if (key in updatedState) {
+              updatedState[key] += value;
+              if (gameRules.bounds[key]) {
+                const { min, max } = gameRules.bounds[key];
+                updatedState[key] = Math.max(
+                  min,
+                  Math.min(max, updatedState[key])
+                );
+              }
+              effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${key}`);
+            } else if (key in newInventory) {
+              newInventory[key] += value;
+              if (gameRules.bounds[key]) {
+                const { min, max } = gameRules.bounds[key];
+                newInventory[key] = Math.max(
+                  min,
+                  Math.min(max, newInventory[key])
+                );
+              } else if (newInventory[key] < 0) newInventory[key] = 0;
+              effectSummary.push(
+                `${value >= 0 ? "+" : ""}${value} ${gameItems[key].displayName}`
               );
             }
-            effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${key}`);
-          } else if (key in newInventory) {
-            newInventory[key] += value;
-            // apply item bounds
-            if (gameRules.bounds[key]) {
-              const { min, max } = gameRules.bounds[key];
-              newInventory[key] = Math.max(
+          }
+
+          if (isStatusEffect && key in newStatusEffects) {
+            newStatusEffects[key] += value;
+            if (gameRules.statusEffectBounds[key]) {
+              const { min, max } = gameRules.statusEffectBounds[key];
+              newStatusEffects[key] = Math.max(
                 min,
-                Math.min(max, updatedInventory[key])
+                Math.min(max, newStatusEffects[key])
               );
-            } else if (newInventory[key] < 0) newInventory[key] = 0;
-
+            }
+            const displayName = initialStatusEffects[key]?.displayName ?? key;
             effectSummary.push(
-              `${value >= 0 ? "+" : ""}${value} ${gameItems[key].displayName}`
+              `${value >= 0 ? "+" : ""}${value} ${displayName}`
             );
           }
-        }
-        if (isStatusEffect && key in newStatusEffects) {
-          // status effects shouldn't boost future status effects
-          newStatusEffects[key] += value;
-          if (gameRules.statusEffectBounds[key]) {
-            const { min, max } = gameRules.statusEffectBounds[key];
-            newStatusEffects[key] = Math.max(
-              min,
-              Math.min(max, newStatusEffects[key])
-            );
-          }
-          const displayName = initialStatusEffects[key]?.displayName || key;
-          effectSummary.push(`${value >= 0 ? "+" : ""}${value} ${displayName}`);
-        }
-        if (isExploring) {
-          setIsExploring(false);
-        }
-      });
+        });
+      };
 
-      const fullLog = `${logText} (${effectSummary.join(", ")})`;
+      processEffect(effect, false);
+      processEffect(statusEffects, true);
+
+      const fullLog =
+        effectSummary.length > 0
+          ? `${logText} (${effectSummary.join(", ")})`
+          : logText;
 
       return {
         ...updatedState,
@@ -568,15 +571,7 @@ export default function Game2() {
     const effects = item.effect;
     const statusEffects = item.statusEffects;
 
-    console.log(effects);
-    console.log(statusEffects);
-    if (effects) {
-      applyChoiceEffect(effects, false, `You used a ${item.displayName}`);
-    }
-    if (statusEffects) {
-      console.log(statusEffects);
-      applyChoiceEffect(statusEffects, true, "");
-    }
+    applyChoiceEffect(effects, statusEffects, `You used a ${item.displayName}`);
 
     setGameState((prev) => {
       const newInventory = { ...prev.inventory };
@@ -637,13 +632,15 @@ export default function Game2() {
                 <ActionButton
                   key={index}
                   text={choice.text}
-                  func={() =>
+                  func={() => {
                     applyChoiceEffect(
-                      choice.effect || choice.statusEffects || {},
-                      !!choice.statusEffects,
+                      choice.effect || {},
+                      choice.statusEffects || {},
                       choice.logText || "You chose an action."
-                    )
-                  }
+                    );
+                    setIsExploring(false);
+                    setExploreItem(null);
+                  }}
                 />
               ))}
             </div>
@@ -847,7 +844,7 @@ export default function Game2() {
     const event = getRandomRestEvent(gameState);
     applyChoiceEffect(
       event.effect || {},
-      false,
+      event.statusEffects || {},
       `Night ${gameState.day}. ${event.text}`
     );
 

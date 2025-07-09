@@ -11,8 +11,8 @@
     "description": "Permanently increase strength",
     "boost": 0.1
   },
-  "enlightened": {
-    "displayName": "Enlightened Status",
+  "intelligence": {
+    "displayName": "Intelligence",
     "effectOn": "intelligence",
     "description": "Permanently improve luck on future explorations",
     "boost": 1

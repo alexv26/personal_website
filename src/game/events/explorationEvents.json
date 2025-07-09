@@ -5,7 +5,7 @@
     "choices": [
       {
         "text": "Search the ruins",
-        "statusEffects": { "enlightened": 1 },
+        "statusEffects": { "intelligence": 1 },
         "logText": "All books seem to be gone except for one titled 'The Silly Caterpillar'. I wonder what it's about."
       },
       {
@@ -21,29 +21,20 @@
     "choices": [
       {
         "text": "Go inside",
-        "effect": { "vicodin": 2, "health": -5, "radx": 1, "bandage": 2 },
+        "effect": {
+          "vicodin": 1,
+          "health": -5,
+          "radx": 1,
+          "bandage": 1,
+          "bleed": 5
+        },
+        "statusEffects": { "health": 1 },
         "logText": "You walk into a glass door. But inside, you find some vicodin inside a lupus textbook, along with some other stuff. "
       },
       {
         "text": "Turn around",
-        "effect": { "vicodin": -2, "health": -10 },
-        "logText": "You start walking back to your base, but simply cannot resist the temptation of searching the hospital. Inside, you get chased and attacked by a tall man with a cane. He steals some vicodin."
-      }
-    ]
-  },
-  "bar": {
-    "id": "bar",
-    "text": "You find yourself at a bar.",
-    "choices": [
-      {
-        "text": "Enter cautiously",
-        "effect": { "health": 5, "thirst": -5 },
-        "logText": "The bartender serves you a mango cart."
-      },
-      {
-        "text": "Leave",
-        "effect": { "thirst": 5 },
-        "logText": "No mango carts for you. You are thirsty."
+        "effect": { "vicodin": -1, "health": -10, "bleed": 10 },
+        "logText": "You start walking back to your base, but feel something calling to you, so you return to the hospital. Inside, you get chased and attacked by a tall man with a cane. He steals some vicodin."
       }
     ]
   },
@@ -85,7 +76,7 @@
     "choices": [
       {
         "text": "Empty pipette contents on petri dish.",
-        "effect": { "health": -10, "radiation": 10 },
+        "effect": { "health": -10, "radiation": 10, "bleed": 5 },
         "logText": "You create a yeast monster. It attacks you."
       },
       {
@@ -117,7 +108,14 @@
     "choices": [
       {
         "text": "Continue hiking to the top",
-        "effect": { "water": 3, "food": 3, "radx": 1, "scrap": 2, "medkit": 1 },
+        "effect": {
+          "water": 3,
+          "food": 3,
+          "radx": 1,
+          "scrap": 2,
+          "medkit": 1,
+          "bleed": 5
+        },
         "logText": "They all die, but thankfully they had plenty of supplies."
       },
       {
@@ -154,19 +152,19 @@
       },
       {
         "text": "Challenge the Rat King.",
-        "effect": { "health": -10, "scrap": 3 },
+        "effect": { "health": -10, "scrap": 3, "bleed": 5 },
         "logText": "You fight bravely and win! The rats flee, dropping bits of scrap as they squeak in terror."
       },
       {
         "text": "Join them.",
         "statusEffects": { "strength": 1 },
-        "logText": "You don a crown of cheese and lead them in song. You're not sure what’s in the cheese, but you feel powerful."
+        "logText": "You don a crown of cheese and lead them in song. You're not sure what's in the cheese, but you feel powerful."
       }
     ]
   },
   "mysteriousBroadcast": {
     "id": "mysteriousBroadcast",
-    "text": "An old radio crackles to life, playing a distorted jingle: 'Come to Uncle Grizz’s Happy Dome™… population: YOU!'",
+    "text": "An old radio crackles to life, playing a distorted jingle: 'Come to Uncle Grizz's Happy Dome™… population: YOU!'",
     "choices": [
       {
         "text": "Approach the source.",
@@ -201,7 +199,7 @@
       },
       {
         "text": "Mock the toaster.",
-        "effect": { "health": -15, "radiation": 10 },
+        "effect": { "health": -15, "radiation": 10, "bleed": 5 },
         "logText": "Big mistake. It unleashes the fury of the Burnt Bagel Protocol™. You are lightly crisped and deeply humbled."
       }
     ]
@@ -222,7 +220,7 @@
       },
       {
         "text": "Ask if it's lupus.",
-        "effect": { "health": -5 },
+        "effect": { "health": -5, "bleed": 5 },
         "logText": "He throws a clipboard at you. 'It's NEVER lupus!' You suffer minor bruising and existential regret."
       }
     ]
@@ -249,13 +247,13 @@
     "choices": [
       {
         "text": "Test the device",
-        "effect": { "strength": 5, "health": -5 },
-        "statusEffects": null,
+        "effect": { "strength": 5, "health": -15, "bleed": 5 },
+        "statusEffects": { "strength": 1 },
         "logText": "The device boosts your strength but shocks your nerves a bit."
       },
       {
         "text": "Take a spare part and leave",
-        "effect": { "scrap": 5 },
+        "effect": { "scrap": 1 },
         "logText": "You quietly pocket some useful parts and slip away."
       }
     ]
@@ -266,12 +264,12 @@
     "choices": [
       {
         "text": "Dance wildly",
-        "effect": { "strength": 3, "radiation": 7, "health": -2 },
+        "effect": { "strength": 3, "radiation": 10, "health": -5 },
         "logText": "You get a workout but feel the radiation creeping in."
       },
       {
         "text": "Steal a roller skate",
-        "effect": { "scrap": 4 },
+        "effect": { "scrap": 3 },
         "logText": "You nab a skate that might come in handy."
       }
     ]
@@ -282,8 +280,8 @@
     "choices": [
       {
         "text": "Pet the cat",
-        "statusEffects": { "enlightened": 1 },
-        "effect": { "health": 5 },
+        "effect": { "health": 5, "strength": 7 },
+        "statusEffects": { "intelligence": 1 },
         "logText": "The cat shares its wisdom, making you feel better."
       },
       {
@@ -299,12 +297,12 @@
     "choices": [
       {
         "text": "Press the button",
-        "effect": { "food": 2, "water": 2, "radiation": 3 },
+        "effect": { "food": 2, "water": 2, "radiation": 10 },
         "logText": "You get some snacks and water... but they might be slightly radioactive."
       },
       {
         "text": "Destroy the machine",
-        "effect": { "scrap": 6, "health": -5 },
+        "effect": { "scrap": 2, "health": -5, "bleed": 5 },
         "logText": "You smash it open, taking some scrap but hurting yourself."
       }
     ]
@@ -315,12 +313,12 @@
     "choices": [
       {
         "text": "Play a round",
-        "effect": { "strength": 2, "hunger": 3 },
+        "effect": { "strength": 2, "hunger": 5 },
         "logText": "You get a rush, but forget to eat."
       },
       {
         "text": "Scavenge parts",
-        "effect": { "scrap": 5 },
+        "effect": { "scrap": 2 },
         "logText": "You salvage valuable electronic components."
       }
     ]
@@ -336,8 +334,7 @@
       },
       {
         "text": "Refuse and take his notes",
-        "effect": { "scrap": 3 },
-        "statusEffects": { "enlightened": 1 },
+        "statusEffects": { "intelligence": 1 },
         "logText": "You grab his notes about radiation-resistant plants."
       }
     ]
@@ -365,7 +362,6 @@
       {
         "text": "Join the performers",
         "effect": { "strength": 4, "health": -3 },
-        "statusEffects": { "enlightened": 1 },
         "logText": "You gain strength from the workout but feel worn out."
       },
       {
@@ -381,7 +377,7 @@
     "choices": [
       {
         "text": "Push through",
-        "effect": { "health": -10, "strength": 5 },
+        "effect": { "health": -10, "strength": 5, "bleed": 5 },
         "logText": "The fog drains your vitality but sharpens your muscles."
       },
       {
