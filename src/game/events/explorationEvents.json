@@ -5,237 +5,389 @@
     "choices": [
       {
         "text": "Search the ruins",
-        "effect": { "radiation": 5, "scrap": 3 },
-        "logText": "Books are gone, but broken tech litters the floor."
+        "statusEffects": { "enlightened": 1 },
+        "logText": "All books seem to be gone except for one titled 'The Silly Caterpillar'. I wonder what it's about."
       },
       {
         "text": "Rest in the shade",
-        "effect": { "health": 5, "thirst": 5 },
-        "logText": "The cool shadow helps you rest, but you grow thirstier."
+        "effect": { "health": 5, "thirst": 5, "hunger": 5 },
+        "logText": "The cool shadow helps you rest, but as time passes, you grow hungry and thirsty."
       }
     ]
   },
-  "rustedTruck": {
-    "id": "rustedTruck",
-    "text": "A rusted military truck sits half-buried in sand.",
+  "abandonedHospital": {
+    "id": "abandonedHospital",
+    "text": "You stumble upon an abandoned hospital.",
     "choices": [
       {
-        "text": "Pop open the back",
-        "effect": { "vicodin": 1, "health": -5 },
-        "logText": "You cut yourself, but find vicodin in a crate."
+        "text": "Go inside",
+        "effect": { "vicodin": 2, "health": -5, "radx": 1, "bandage": 2 },
+        "logText": "You walk into a glass door. But inside, you find some vicodin inside a lupus textbook, along with some other stuff. "
       },
       {
-        "text": "Search under the hood",
-        "effect": { "scrap": 4 },
-        "logText": "You yank out wires and panels."
+        "text": "Turn around",
+        "effect": { "vicodin": -2, "health": -10 },
+        "logText": "You start walking back to your base, but simply cannot resist the temptation of searching the hospital. Inside, you get chased and attacked by a tall man with a cane. He steals some vicodin."
       }
     ]
   },
-  "collapsedShack": {
-    "id": "collapsedShack",
-    "text": "A wooden shack leans dangerously to one side.",
+  "bar": {
+    "id": "bar",
+    "text": "You find yourself at a bar.",
     "choices": [
       {
         "text": "Enter cautiously",
-        "effect": { "bandage": 1, "health": -3 },
-        "logText": "A beam falls — but you salvage some bandages."
+        "effect": { "health": 5, "thirst": -5 },
+        "logText": "The bartender serves you a mango cart."
       },
       {
-        "text": "Take the door off its hinges",
-        "effect": { "scrap": 3 },
-        "logText": "The wood's rotted, but still usable as material."
+        "text": "Leave",
+        "effect": { "thirst": 5 },
+        "logText": "No mango carts for you. You are thirsty."
       }
     ]
   },
-  "boneField": {
-    "id": "boneField",
-    "text": "An open field is littered with sun-bleached bones.",
+  "marioKart": {
+    "id": "marioKart",
+    "text": "You find a tv system with Mario Kart launced on it. Pick a map.",
     "choices": [
       {
-        "text": "Dig around",
-        "effect": { "food": 1, "radiation": 3 },
-        "logText": "A can of rations lies buried near a corpse."
+        "text": "Koopa Cape",
+        "effect": { "scrap": 1, "radx": 1, "food": 1, "water": 1 },
+        "logText": "You have good taste. You deserve a reward."
       },
       {
-        "text": "Use it as a shortcut",
-        "effect": { "strength": 2, "radiation": 5 },
-        "logText": "You power through but inhale radioactive dust."
+        "text": "Cheese Land",
+        "effect": { "health": -1 },
+        "logText": "What is wrong with you."
       }
     ]
   },
-  "brokenElevator": {
-    "id": "brokenElevator",
-    "text": "A mall elevator shaft lies open before you.",
+  "dog": {
+    "id": "dog",
+    "text": "You stumble across a cute dog.",
     "choices": [
       {
-        "text": "Climb down the cables",
-        "effect": { "health": -5, "radx": 1 },
-        "logText": "It was risky, but you find RAD-X in a storage room."
+        "text": "Pet her",
+        "effect": { "health": 10, "food": -1 },
+        "logText": "Her name is Lexi. You gave her a treat. You feel warm inside."
       },
       {
-        "text": "Search the lobby",
-        "effect": { "food": 1, "water": 1 },
-        "logText": "The food court is looted, but scraps remain."
+        "text": "Walk away",
+        "effect": { "health": -100 },
+        "logText": "Should've pet her."
       }
     ]
   },
-  "dryWell": {
-    "id": "dryWell",
-    "text": "An old well stands cracked and empty.",
+  "bioLab": {
+    "id": "bioLab",
+    "text": "You enter an abandoned school bio lab. There are some lab instruments laying around.",
     "choices": [
       {
-        "text": "Shout into the well",
-        "effect": { "strength": 1 },
-        "logText": "You scream your frustrations into the void. It helps."
+        "text": "Empty pipette contents on petri dish.",
+        "effect": { "health": -10, "radiation": 10 },
+        "logText": "You create a yeast monster. It attacks you."
       },
       {
-        "text": "Climb inside",
-        "effect": { "radiation": 7, "scrap": 2 },
+        "text": "Drink contents of vial",
+        "statusEffects": { "strength": 1 },
         "logText": "A small stash was hidden inside — and so was mold."
       }
     ]
   },
-  "skeletonWithNote": {
-    "id": "skeletonWithNote",
-    "text": "A skeleton sits against a tree, clutching a faded note.",
+  "hobo": {
+    "id": "hobo",
+    "text": "You come face-to-face with a hobo.",
     "choices": [
       {
-        "text": "Read the note",
-        "effect": { "enlightened": 1 },
-        "logText": "The final words shift something in you. You feel wiser."
+        "text": "Be friendly with him",
+        "effect": { "health": -1 },
+        "logText": "He tickles you. You are uncomfortable."
       },
       {
-        "text": "Check its pockets",
+        "text": "Rob him",
+        "effect": { "vicodin": 1, "radx": 1 },
+        "logText": "You steal his supplies. He doesn't seem too pleased."
+      }
+    ]
+  },
+  "mtWashington": {
+    "id": "mtWashington",
+    "text": "You hike up a Mt Washington for supplies and stumble upon a crew on their way up. They are so close to the top but cannot decide whether to continue, despite having inadequate gear. What should they do?",
+    "choices": [
+      {
+        "text": "Continue hiking to the top",
+        "effect": { "water": 3, "food": 3, "radx": 1, "scrap": 2, "medkit": 1 },
+        "logText": "They all die, but thankfully they had plenty of supplies."
+      },
+      {
+        "text": "Turn around",
         "effect": { "food": 1, "water": 1 },
-        "logText": "You find half a protein bar and a water flask."
+        "logText": "They turn around and survive. They give you some food and water as a reward."
       }
     ]
   },
-  "floodedBasement": {
-    "id": "floodedBasement",
-    "text": "A building basement is flooded with murky water.",
+  "waterSource": {
+    "id": "waterSource",
+    "text": "You find a water source.",
     "choices": [
       {
-        "text": "Wade through it",
-        "effect": { "water": 2, "radiation": 10 },
-        "logText": "You collect some contaminated bottles."
+        "text": "Drink from it",
+        "effect": { "radiation": 10, "strength": 10 },
+        "logText": "You drink the water. You feel stronger, but your skin glows green."
       },
       {
-        "text": "Siphon water from the surface",
-        "effect": { "water": 1 },
-        "logText": "Still gross, but safer than diving in."
+        "text": "Bathe in it.",
+        "effect": { "radiation": 5, "health": 5 },
+        "logText": "You cool down."
       }
     ]
   },
-  "lockedLocker": {
-    "id": "lockedLocker",
-    "text": "You find a locker sealed shut.",
+  "ratKing": {
+    "id": "ratKing",
+    "text": "You stumble upon a tribe of irradiated rats worshiping a massive, cheese-encrusted rat king.",
     "choices": [
       {
-        "text": "Force it open",
-        "effect": { "health": -3, "scrap": 2, "bandage": 1 },
-        "logText": "You bust it open with effort — and injure yourself."
+        "text": "Bow respectfully.",
+        "effect": { "radiation": 5, "food": 1 },
+        "logText": "You earn their trust and are gifted a mysterious block of glowing cheese (it's edible, somehow)."
       },
       {
-        "text": "Leave it be",
-        "effect": { "hunger": 5 },
-        "logText": "You leave it behind, but the missed opportunity stings."
+        "text": "Challenge the Rat King.",
+        "effect": { "health": -10, "scrap": 3 },
+        "logText": "You fight bravely and win! The rats flee, dropping bits of scrap as they squeak in terror."
+      },
+      {
+        "text": "Join them.",
+        "statusEffects": { "strength": 1 },
+        "logText": "You don a crown of cheese and lead them in song. You're not sure what’s in the cheese, but you feel powerful."
       }
     ]
   },
-  "factoryYard": {
-    "id": "factoryYard",
-    "text": "A sprawling factory yard creaks in the wind.",
+  "mysteriousBroadcast": {
+    "id": "mysteriousBroadcast",
+    "text": "An old radio crackles to life, playing a distorted jingle: 'Come to Uncle Grizz’s Happy Dome™… population: YOU!'",
     "choices": [
       {
-        "text": "Climb the scaffolding",
-        "effect": { "strength": 3, "health": -5 },
-        "logText": "You strengthen your arms — and twist your ankle."
+        "text": "Approach the source.",
+        "effect": { "radiation": 15, "scrap": 5 },
+        "logText": "You find a bunker filled with animatronics and scrap. Also: an uncomfortable amount of clown imagery."
       },
       {
-        "text": "Search the dumpsters",
-        "effect": { "scrap": 3, "radx": 1 },
-        "logText": "Rotting metal... and a vial of RAD-X underneath."
+        "text": "Smash the radio.",
+        "effect": { "strength": 2 },
+        "logText": "You destroy it with primal force. The static stops. You feel… slightly less haunted."
+      },
+      {
+        "text": "Try to tune it in.",
+        "effect": { "vicodin": 1 },
+        "logText": "You hear a whisper: 'Pain is temporary. Vicodin is forever.' You pocket a pill that materializes from the speaker grill."
       }
     ]
   },
-  "scorchedTree": {
-    "id": "scorchedTree",
-    "text": "A tree is blackened and twisted from fallout.",
+  "sentientToaster": {
+    "id": "sentientToaster",
+    "text": "You discover a sentient toaster floating 3 feet off the ground. It speaks: 'I require sacrifice… or rye bread.'",
     "choices": [
       {
-        "text": "Collect bark",
-        "effect": { "food": 1 },
-        "logText": "The bark burns oddly — but it’s edible in a pinch."
+        "text": "Sacrifice a piece of food.",
+        "effect": { "food": -1, "health": 5 },
+        "logText": "The toaster hums with pleasure. It toasts your offering and blesses you with perfectly crispy vibes."
       },
       {
-        "text": "Rest under it",
-        "effect": { "radiation": 5 },
-        "logText": "The roots still glow. Not safe at all."
+        "text": "Attempt to communicate in binary.",
+        "effect": { "radx": 1 },
+        "logText": "You beep wildly. The toaster beeps back. Somehow, you earn its respect and receive a vial of RAD-X in return."
+      },
+      {
+        "text": "Mock the toaster.",
+        "effect": { "health": -15, "radiation": 10 },
+        "logText": "Big mistake. It unleashes the fury of the Burnt Bagel Protocol™. You are lightly crisped and deeply humbled."
       }
     ]
   },
-  "rooftopGarden": {
-    "id": "rooftopGarden",
-    "text": "You spot a rooftop garden hidden among debris.",
+  "diagnosisTent": {
+    "id": "diagnosisTent",
+    "text": "You come across a half-collapsed medical tent with a grumpy doctor popping Vicodin and muttering, 'It's never lupus.'",
     "choices": [
       {
-        "text": "Harvest what’s left",
-        "effect": { "food": 2 },
-        "logText": "A few carrots and herbs are still alive."
+        "text": "Let him examine you.",
+        "effect": { "health": 10, "bleed": -10 },
+        "logText": "He saves your life while insulting your intelligence. You feel better but vaguely insulted."
       },
       {
-        "text": "Dig in the dirt",
-        "effect": { "radx": 1, "scrap": 1 },
-        "logText": "A buried stash contains a single RAD-X dose."
+        "text": "Steal some supplies while he's ranting.",
+        "effect": { "medkit": 1, "vicodin": 1 },
+        "logText": "You pocket a medkit and some Vicodin while he monologues about sarcasm being a coping mechanism."
+      },
+      {
+        "text": "Ask if it's lupus.",
+        "effect": { "health": -5 },
+        "logText": "He throws a clipboard at you. 'It's NEVER lupus!' You suffer minor bruising and existential regret."
       }
     ]
   },
-  "smashedConsole": {
-    "id": "smashedConsole",
-    "text": "A glowing console lies cracked in the road.",
+  "glowingFungusGrove": {
+    "id": "glowingFungusGrove",
+    "text": "You enter a grove filled with luminescent mushrooms that pulse softly in the dark.",
     "choices": [
       {
-        "text": "Touch the panel",
-        "effect": { "radiation": 10, "vicodin": 1 },
-        "logText": "Pain shoots through you, but you black out holding vicodin."
+        "text": "Harvest some mushrooms",
+        "effect": { "food": 3, "radiation": 5 },
+        "logText": "The mushrooms are strangely tasty but maybe a bit radioactive."
       },
       {
-        "text": "Smash it further",
+        "text": "Avoid and gather spores",
+        "effect": { "scrap": 2, "radx": 1 },
+        "logText": "You collect spores that might help with radiation sickness later."
+      }
+    ]
+  },
+  "madInventorsWorkshop": {
+    "id": "madInventorsWorkshop",
+    "text": "You find a ramshackle workshop where a wild-eyed inventor invites you to try his latest contraption.",
+    "choices": [
+      {
+        "text": "Test the device",
+        "effect": { "strength": 5, "health": -5 },
+        "statusEffects": null,
+        "logText": "The device boosts your strength but shocks your nerves a bit."
+      },
+      {
+        "text": "Take a spare part and leave",
+        "effect": { "scrap": 5 },
+        "logText": "You quietly pocket some useful parts and slip away."
+      }
+    ]
+  },
+  "radioactiveRollerDisco": {
+    "id": "radioactiveRollerDisco",
+    "text": "An old roller rink blasts 80s hits and glows with neon lights—despite the radiation.",
+    "choices": [
+      {
+        "text": "Dance wildly",
+        "effect": { "strength": 3, "radiation": 7, "health": -2 },
+        "logText": "You get a workout but feel the radiation creeping in."
+      },
+      {
+        "text": "Steal a roller skate",
         "effect": { "scrap": 4 },
-        "logText": "You bash it apart and grab the pieces."
+        "logText": "You nab a skate that might come in handy."
       }
     ]
   },
-  "barricadedDoor": {
-    "id": "barricadedDoor",
-    "text": "A door is nailed shut with planks and barbed wire.",
+  "psychicCat": {
+    "id": "psychicCat",
+    "text": "A mysterious cat with glowing eyes stares at you knowingly.",
     "choices": [
       {
-        "text": "Rip it open",
-        "effect": { "health": -7, "food": 2 },
-        "logText": "You’re bleeding... but there's food inside."
+        "text": "Pet the cat",
+        "statusEffects": { "enlightened": 1 },
+        "effect": { "health": 5 },
+        "logText": "The cat shares its wisdom, making you feel better."
       },
       {
-        "text": "Peek through a crack",
-        "effect": { "hunger": 2 },
-        "logText": "You see supplies, but can't reach them."
+        "text": "Ignore it",
+        "effect": { "strength": -2 },
+        "logText": "You miss out on something special."
       }
     ]
   },
-  "powerStation": {
-    "id": "powerStation",
-    "text": "A busted power station buzzes with residual energy.",
+  "hauntedVendingMachine": {
+    "id": "hauntedVendingMachine",
+    "text": "A vending machine rattles and hums, dispensing random items.",
     "choices": [
       {
-        "text": "Search the control room",
-        "effect": { "radiation": 6, "scrap": 5 },
-        "logText": "You fry your Geiger counter but leave with scrap."
+        "text": "Press the button",
+        "effect": { "food": 2, "water": 2, "radiation": 3 },
+        "logText": "You get some snacks and water... but they might be slightly radioactive."
       },
       {
-        "text": "Wait for it to cool down",
-        "effect": { "nothing": true },
-        "logText": "It never does. You waste precious time."
+        "text": "Destroy the machine",
+        "effect": { "scrap": 6, "health": -5 },
+        "logText": "You smash it open, taking some scrap but hurting yourself."
+      }
+    ]
+  },
+  "brokenArcadeCabinet": {
+    "id": "brokenArcadeCabinet",
+    "text": "A flickering arcade cabinet displays pixelated chaos.",
+    "choices": [
+      {
+        "text": "Play a round",
+        "effect": { "strength": 2, "hunger": 3 },
+        "logText": "You get a rush, but forget to eat."
+      },
+      {
+        "text": "Scavenge parts",
+        "effect": { "scrap": 5 },
+        "logText": "You salvage valuable electronic components."
+      }
+    ]
+  },
+  "crazedBotanist": {
+    "id": "crazedBotanist",
+    "text": "A wild-eyed botanist offers you a strange glowing plant.",
+    "choices": [
+      {
+        "text": "Accept the plant",
+        "effect": { "health": 10, "radiation": 5 },
+        "logText": "The plant heals you but feels a little dangerous."
+      },
+      {
+        "text": "Refuse and take his notes",
+        "effect": { "scrap": 3 },
+        "statusEffects": { "enlightened": 1 },
+        "logText": "You grab his notes about radiation-resistant plants."
+      }
+    ]
+  },
+  "rogueRobotButler": {
+    "id": "rogueRobotButler",
+    "text": "A polite but malfunctioning robot offers you a drink.",
+    "choices": [
+      {
+        "text": "Accept the drink",
+        "effect": { "health": 5, "radiation": 10 },
+        "logText": "The drink boosts your energy but might be contaminated."
+      },
+      {
+        "text": "Hack the robot",
+        "effect": { "scrap": 7, "strength": 2 },
+        "logText": "You reprogram it to serve you better."
+      }
+    ]
+  },
+  "theLostCircus": {
+    "id": "theLostCircus",
+    "text": "You hear circus music and find a deserted big top with strange performers still practicing.",
+    "choices": [
+      {
+        "text": "Join the performers",
+        "effect": { "strength": 4, "health": -3 },
+        "statusEffects": { "enlightened": 1 },
+        "logText": "You gain strength from the workout but feel worn out."
+      },
+      {
+        "text": "Steal their supplies",
+        "effect": { "food": 4, "water": 3, "scrap": 2 },
+        "logText": "You grab some leftover rations and gear."
+      }
+    ]
+  },
+  "invisibleFog": {
+    "id": "invisibleFog",
+    "text": "A creeping invisible fog surrounds you, humming softly.",
+    "choices": [
+      {
+        "text": "Push through",
+        "effect": { "health": -10, "strength": 5 },
+        "logText": "The fog drains your vitality but sharpens your muscles."
+      },
+      {
+        "text": "Wait it out",
+        "effect": { "health": 5, "hunger": 5, "thirst": 5 },
+        "logText": "You rest as the fog passes, feeling slightly better but hungry and thirsty."
       }
     ]
   }

@@ -24,6 +24,7 @@
   },
   "statusEffects": {
     "shelterStrength": 0,
+    "strength": 0,
     "enlightened": 0,
     "radiation": 0,
     "health": 0

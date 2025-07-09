@@ -44,7 +44,7 @@
   "shelterFortifications": {
     "displayName": "Shelter Fortifications",
     "description": "Greatly improve shelter strength",
-    "craftingRecipe": { "scrap": 5 },
+    "craftingRecipe": { "scrap": 15 },
     "effect": { "shelterStrength": 20 },
     "statusEffects": { "shelterStrength": 1 }
   },

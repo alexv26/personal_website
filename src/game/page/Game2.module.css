@@ -69,7 +69,7 @@
   height: 300px;
   text-align: left;
   overflow-y: auto; /* Scrollable */
-  color: limegreen;
+  color: lime;
 }
 
 .infoScreen::-webkit-scrollbar,
@@ -89,7 +89,7 @@
 }
 
 .terminalOutput p {
-  margin: 0.3rem;
+  margin: 0.6rem;
 }
 
 .buttons {

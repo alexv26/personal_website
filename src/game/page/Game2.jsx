@@ -26,84 +26,6 @@ import explorationEvents from "../events/explorationEvents.json";
 
 import restEvents from "../events/restEvents.json";
 
-const getRandomExplorationEvent = () => {
-  const values = Object.values(explorationEvents); // convert object to array
-  const randomIndex = Math.floor(Math.random() * values.length);
-  return values[randomIndex];
-};
-
-const getRandomRestEvent = (gameState) => {
-  const { strength, shelterStrength } = gameState;
-
-  const base = gameRules.baseRestEventChances;
-
-  // Adjust negative and positive shelter events based on shelterStrength
-  const negShelterFactor = 1 - shelterStrength / 100; // Decrease with higher shelter
-  const posShelterFactor = 1 + shelterStrength / 100; // Increase with higher shelter
-
-  let negativeShelterChance = base.negativeShelterEvents * negShelterFactor;
-  let positiveShelterChance = base.positiveShelterEvents * posShelterFactor;
-
-  // Adjust invade and random based on strength and shelterStrength (strength weighted more)
-  const defenseScore = 0.7 * (strength / 100) + 0.3 * (shelterStrength / 100);
-  const invadeFactor = 1 - defenseScore;
-  const randomFactor = 1 + defenseScore;
-
-  let invadeChance = base.invadeEvents * invadeFactor;
-  let randomChance = base.randomWorldEvents * randomFactor;
-
-  // Rare events remain constant
-  let rareChance = base.rareEvents;
-
-  // Normalize probabilities
-  const total =
-    negativeShelterChance +
-    positiveShelterChance +
-    invadeChance +
-    randomChance +
-    rareChance;
-
-  negativeShelterChance /= total;
-  positiveShelterChance /= total;
-  invadeChance /= total;
-  randomChance /= total;
-  rareChance /= total;
-
-  // Weighted selection
-  const roll = Math.random();
-  let category;
-  if (roll < negativeShelterChance) {
-    category = "negativeShelterEvents";
-  } else if (roll < negativeShelterChance + positiveShelterChance) {
-    category = "positiveShelterEvents";
-  } else if (
-    roll <
-    negativeShelterChance + positiveShelterChance + invadeChance
-  ) {
-    category = "invadeEvents";
-  } else if (
-    roll <
-    negativeShelterChance + positiveShelterChance + invadeChance + randomChance
-  ) {
-    category = "randomWorldEvents";
-  } else {
-    category = "rareEvents";
-  }
-
-  console.log("Category:", category);
-  console.log(
-    "Probabilities:",
-    negativeShelterChance,
-    positiveShelterChance,
-    invadeChance,
-    randomChance,
-    rareChance
-  );
-
-  const eventPool = Object.values(restEvents[category]);
-  return eventPool[Math.floor(Math.random() * eventPool.length)];
-};
-
 export default function Game2() {
   const terminalRef = useRef(null);
   const [gameState, setGameState] = useState(() => {
@@ -273,13 +195,13 @@ export default function Game2() {
                 <p>
                   <strong>
                     {gameItem.displayName}:{" "}
-                    <span style={{ color: "gold" }}>{count}</span>
+                    <span style={{ color: "#FFF51E" }}>{count}</span>
                   </strong>
                 </p>
                 {Object.keys(gameItem.effect || {}).length > 0 && (
                   <p
                     style={{
-                      color: "lightgreen",
+                      color: "lime",
                       marginTop: "0",
                       paddingTop: "0",
                     }}
@@ -315,7 +237,7 @@ export default function Game2() {
                     const effectDescription =
                       initialStatusEffects[effectKey]?.effectOn || effectKey;
                     return (
-                      <span key={effectKey} style={{ color: "gold" }}>
+                      <span key={effectKey} style={{ color: "#FFF51E" }}>
                         {"  "}
                         {value * 10}% {effectDescription} boost
                         {i < arr.length - 1 ? ", " : ""}
@@ -342,7 +264,7 @@ export default function Game2() {
     if (viewingRules) {
       return (
         <div className={styles.instructions}>
-          <h3 style={{ color: "gold" }}>
+          <h3 style={{ color: "#FFF51E" }}>
             Welcome to Nuclear Fallout: The Survival Game
           </h3>
 
@@ -465,7 +387,7 @@ export default function Game2() {
 
     return (
       <>
-        <p style={{ color: "gold" }}>
+        <p style={{ color: "#FFF51E" }}>
           <strong>Day {gameState.day}</strong>
         </p>
         <p
@@ -483,7 +405,9 @@ export default function Game2() {
           .map(([key, value]) => (
             <p key={key}>
               <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong>{" "}
-              <span style={{ color: "gold" }}>{value}</span>
+              <span style={{ color: "#FFF51E" }}>
+                {value}/{gameRules.bounds[key].max}
+              </span>
             </p>
           ))}
         <p
@@ -500,7 +424,7 @@ export default function Game2() {
           <div key={key}>
             <p>
               <strong>{initialStatusEffects[key].displayName}: </strong>
-              <span style={{ color: "gold" }}>
+              <span style={{ color: "#FFF51E" }}>
                 {value * initialStatusEffects[key].boost * 100}%
               </span>
             </p>
@@ -574,8 +498,8 @@ export default function Game2() {
 
       Object.entries(effect).forEach(([key, val]) => {
         let adjustedValue;
-        if (key in newStatusEffects) {
-          // Compute the multiplier
+        if (key in newStatusEffects && !isStatusEffect) {
+          // status effects shouldn't apply boosts.
           const boostPerLevel = initialStatusEffects[key]?.boost ?? 0;
           const totalBoost = boostPerLevel * (newStatusEffects[key] ?? 0);
           const multiplier = val > 0 ? totalBoost : totalBoost * -1;
@@ -612,6 +536,7 @@ export default function Game2() {
           }
         }
         if (isStatusEffect && key in newStatusEffects) {
+          // status effects shouldn't boost future status effects
           newStatusEffects[key] += value;
           if (gameRules.statusEffectBounds[key]) {
             const { min, max } = gameRules.statusEffectBounds[key];
@@ -714,8 +639,8 @@ export default function Game2() {
                   text={choice.text}
                   func={() =>
                     applyChoiceEffect(
-                      choice.effect || {},
-                      false,
+                      choice.effect || choice.statusEffects || {},
+                      !!choice.statusEffects,
                       choice.logText || "You chose an action."
                     )
                   }
@@ -843,6 +768,81 @@ export default function Game2() {
     );
   };
 
+  const getRandomRestEvent = (gameState) => {
+    const { strength, shelterStrength } = gameState;
+
+    const base = gameRules.baseRestEventChances;
+
+    // Adjust negative and positive shelter events based on shelterStrength
+    const negShelterFactor = 1 - shelterStrength / 100; // Decrease with higher shelter
+    const posShelterFactor = 1 + shelterStrength / 100; // Increase with higher shelter
+
+    let negativeShelterChance = base.negativeShelterEvents * negShelterFactor;
+    let positiveShelterChance = base.positiveShelterEvents * posShelterFactor;
+
+    // Adjust invade and random based on strength and shelterStrength (strength weighted more)
+    const defenseScore = 0.7 * (strength / 100) + 0.3 * (shelterStrength / 100);
+    const invadeFactor = 1 - defenseScore;
+    const randomFactor = 1 + defenseScore;
+
+    let invadeChance = base.invadeEvents * invadeFactor;
+    let randomChance = base.randomWorldEvents * randomFactor;
+
+    // Rare events remain constant
+    let rareChance = base.rareEvents;
+
+    // Normalize probabilities
+    const total =
+      negativeShelterChance +
+      positiveShelterChance +
+      invadeChance +
+      randomChance +
+      rareChance;
+
+    negativeShelterChance /= total;
+    positiveShelterChance /= total;
+    invadeChance /= total;
+    randomChance /= total;
+    rareChance /= total;
+
+    // Weighted selection
+    const roll = Math.random();
+    let category;
+    if (roll < negativeShelterChance) {
+      category = "negativeShelterEvents";
+    } else if (roll < negativeShelterChance + positiveShelterChance) {
+      category = "positiveShelterEvents";
+    } else if (
+      roll <
+      negativeShelterChance + positiveShelterChance + invadeChance
+    ) {
+      category = "invadeEvents";
+    } else if (
+      roll <
+      negativeShelterChance +
+        positiveShelterChance +
+        invadeChance +
+        randomChance
+    ) {
+      category = "randomWorldEvents";
+    } else {
+      category = "rareEvents";
+    }
+
+    console.log("Category:", category);
+    console.log(
+      "Probabilities:",
+      negativeShelterChance,
+      positiveShelterChance,
+      invadeChance,
+      randomChance,
+      rareChance
+    );
+
+    const eventPool = Object.values(restEvents[category]);
+    return eventPool[Math.floor(Math.random() * eventPool.length)];
+  };
+
   const rest = () => {
     const event = getRandomRestEvent(gameState);
     applyChoiceEffect(
@@ -873,6 +873,31 @@ export default function Game2() {
     }));
 
     setExplorationsToday(0);
+  };
+
+  const [seenExploreEvents, setSeenEvents] = useState([]);
+  const getRandomExplorationEvent = () => {
+    const values = Object.values(explorationEvents); // convert object to array
+    // If all events have been seen, reset
+    if (seenExploreEvents.length >= values.length) {
+      setSeenEvents([]);
+    }
+
+    let unseenEvents = values.filter(
+      (event) => !seenExploreEvents.includes(event.id)
+    );
+    // If for some reason unseenEvents is empty (e.g., bad IDs), fallback
+    if (unseenEvents.length === 0) {
+      unseenEvents = values;
+      setSeenEvents([]);
+    }
+    const randomEvent =
+      unseenEvents[Math.floor(Math.random() * unseenEvents.length)];
+
+    // Record it as seen
+    setSeenEvents((prev) => [...prev, randomEvent.id]);
+
+    return randomEvent;
   };
 
   const explore = () => {

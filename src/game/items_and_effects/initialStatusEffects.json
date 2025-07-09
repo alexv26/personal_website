@@ -5,6 +5,12 @@
     "description": "Permanently reduce future impact on shelter",
     "boost": 0.1
   },
+  "strength": {
+    "displayName": "Permanent Strength Boost",
+    "effectOn": "strength",
+    "description": "Permanently increase strength",
+    "boost": 0.1
+  },
   "enlightened": {
     "displayName": "Enlightened Status",
     "effectOn": "intelligence",
