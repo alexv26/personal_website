@@ -918,7 +918,7 @@ export default function Game2() {
   return (
     <>
       <div className={styles.container}>
-        <h1 className={styles.title}>Nuclear Fallout Game</h1>
+        <h1 className={styles.title}>Nuclear Fallout Survival</h1>
         <div className={styles.terminal}>
           <div className={styles.terminalTile}>
             <h3>Info Screen</h3>
