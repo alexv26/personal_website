@@ -162,7 +162,7 @@ export default function HomePage() {
               <div>
                 <h1>Alexander Velsmid</h1>
                 <p>
-                  Aspiring Software Engineer Dedicated to Designing Meaningful
+                  Aspiring Software Engineer Dedicated to Designing Impactful
                   Software and Exploring the Outdoors
                 </p>
                 <button
