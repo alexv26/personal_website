@@ -31,9 +31,7 @@ export default function Projects() {
             }
             imgSrc={`${publicUrl}/assets/vulnml.png`}
             linkText="Read more..."
-            linkTo={
-              "https://www.dropbox.com/scl/fi/kexa4ehuy04yr1z89lk2z/VulnML.pdf?rlkey=6lhr5w6en2f6hpnk31lbphkv7&e=1&st=m6k9tthb&dl=0"
-            }
+            linkTo={"./#/pdfviewer/VulnML.pdf"}
           />
           <ProjectTile
             title={"Nuke Fallout Game (WIP)"}

@@ -159,7 +159,7 @@ export default function HomePage() {
                   className={styles.heroImage}
                 />
               </button>
-              <div>
+              <div className={styles.headerText}>
                 <h1>Alexander Velsmid</h1>
                 <p>
                   Aspiring Software Engineer Dedicated to Designing Impactful
