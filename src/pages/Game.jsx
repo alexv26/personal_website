@@ -619,7 +619,6 @@ export default function Game() {
         exploreEvents
       );
 
-      console.log(adjustedWeights);
       const randomEvent = randomFromCategory(exploreEvents, adjustedWeights);
       addLog(randomEvent.description);
       setState((prev) => applyEventChanges(prev, randomEvent.changes));

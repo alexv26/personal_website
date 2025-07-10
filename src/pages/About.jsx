@@ -11,7 +11,6 @@ function GalleryTile({ imgSrc, description }) {
 }
 
 export default function About() {
-  console.log(publicUrl);
   return (
     <>
       <div className={styles.flexContainer}>

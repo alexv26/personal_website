@@ -448,7 +448,6 @@ export default function Game2() {
     // Then, check if crafting this item would exceed any statusEffect bounds
     const statusEffects = item.statusEffects || {};
     const currentStatus = gameState.statusEffects;
-    console.log(gameState.statusEffects);
 
     const withinStatusEffectBounds = Object.entries(statusEffects).every(
       ([statusKey, addedValue]) => {
@@ -826,16 +825,6 @@ export default function Game2() {
       category = "rareEvents";
     }
 
-    console.log("Category:", category);
-    console.log(
-      "Probabilities:",
-      negativeShelterChance,
-      positiveShelterChance,
-      invadeChance,
-      randomChance,
-      rareChance
-    );
-
     const eventPool = Object.values(restEvents[category]);
     return eventPool[Math.floor(Math.random() * eventPool.length)];
   };
@@ -854,12 +843,10 @@ export default function Game2() {
       hungerThirstHealthDepletion =
         hungerThirstHealthDepletion + gameRules.maxHungerPunishment;
     }
-    console.log(hungerThirstHealthDepletion);
     if (gameState.thirst == 100) {
       hungerThirstHealthDepletion =
         hungerThirstHealthDepletion + gameRules.maxThirstPunishment;
     }
-    console.log(hungerThirstHealthDepletion);
 
     setGameState((prev) => ({
       ...prev,
@@ -898,7 +885,6 @@ export default function Game2() {
   };
 
   const explore = () => {
-    console.log(explorationsToday);
     if (explorationsToday < gameRules.maxDailyExplorations) {
       setIsExploring(true);
       const exploreEvent = getRandomExplorationEvent();
