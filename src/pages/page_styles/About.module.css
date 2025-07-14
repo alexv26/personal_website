@@ -231,5 +231,7 @@
   .galleryTile {
     flex: 0 0 auto;
     scroll-snap-align: start;
+    word-wrap: break-word;
+    max-width: 100%;
   }
 }
