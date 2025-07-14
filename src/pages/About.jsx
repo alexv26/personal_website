@@ -10,13 +10,53 @@ function GalleryTile({ imgSrc, description }) {
   );
 }
 
+function Icon({ iconSrc, linkTo }) {
+  return (
+    <>
+      <a href={linkTo} target="_blank" rel="noopener noreferrer">
+        <img
+          style={{ maxWidth: "40px" }}
+          src={`${publicUrl}/assets/icons/${iconSrc}`}
+        />
+      </a>
+    </>
+  );
+}
+
 export default function About() {
   return (
     <>
       <div className={styles.flexContainer}>
+        <div className={styles.aboutHeader}>
+          <h2>About Me</h2>
+        </div>
         <div className={styles.aboutSection}>
-          <div className={styles.aboutHeader}>
-            <h2>About Me</h2>
+          <div className={styles.aboutImgAndLinks}>
+            <img
+              className={styles.aboutImg}
+              src={`${publicUrl}/assets/alex.jpeg`}
+            />
+            <div className={styles.aboutMeText}>
+              <h1>Alex Velsmid</h1>
+              <h2>
+                B.S. Computer Science, with a Minor in Management and Leadership
+                at Boston College
+              </h2>
+              <h3>Co-Captain of Outdoor Adventures</h3>
+            </div>
+
+            <div className={styles.links}>
+              <Icon
+                iconSrc="github-mark-white.svg"
+                linkTo="https://github.com/alexv26"
+              />
+              <Icon iconSrc="email.png" linkTo="mailto:velsmida@bc.edu" />
+              <Icon
+                iconSrc="linkedin.png"
+                linkTo="https://www.linkedin.com/in/alexander-velsmid/"
+              />
+              <Icon iconSrc="resume.png" linkTo="./#/pdfviewer/resume.pdf" />
+            </div>
           </div>
           <div className={styles.box}>
             <p>
@@ -60,43 +100,41 @@ export default function About() {
           <div className={styles.gallery}>
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/alex_jeff_evan.jpeg`}
-              description={"Me, Jeffrey, and Evan hiking Mt Washington"}
+              description={"Me, Jeffrey, and Evan hiking Mt Washington."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/washington.jpeg`}
-              description={"Approaching Mt. Washington summit"}
+              description={"Approaching Mt. Washington summit."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/moosilauke.jpeg`}
-              description={"At the Mt. Moosilauke summit"}
+              description={"At the Mt. Moosilauke summit."}
             />
             <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/freshman_friends.jpg`}
-              description={"Freshman year friends"}
+              imgSrc={`${publicUrl}/assets/gallery/lexi.JPG`}
+              description={
+                "My dog Lexi. She was the best dog ever. I love and miss her."
+              }
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/hiking_with_bsa.jpeg`}
-              description={"Hiking with Boy Scout troop up Mt. Lafayette"}
+              description={"Hiking with Boy Scout troop up Mt. Lafayette."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/universal.jpeg`}
-              description={"High school senior trip to Universal Studios"}
+              description={"High school senior trip to Universal Studios."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/monroe.jpeg`}
-              description={"Mt. Monroe Summit"}
-            />
-            <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/refereeing.JPG`}
-              description={"Refereeing club basketball"}
+              description={"Mt. Monroe Summit."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/with_dad_hike.jpg`}
-              description={"Hiking trip with my dad"}
+              description={"Hiking trip with my dad."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/me_and_gavin.jpg`}
-              description={"Me and my friend Gavin at graduation"}
+              description={"Me and my friend Gavin at graduation."}
             />
           </div>
         </div>

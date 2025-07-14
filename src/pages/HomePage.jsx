@@ -1,35 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./page_styles/HomePage.module.css";
 import Block from "../components/Block";
+import { useNavigate } from "react-router-dom";
 const publicUrl = import.meta.env.BASE_URL;
-
-function FadeInSection({ children }) {
-  const [isVisible, setVisible] = useState(false);
-  const domRef = useRef();
-
-  useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          observer.unobserve(entry.target);
-        }
-      });
-    });
-    const current = domRef.current;
-    if (current) observer.observe(current);
-    return () => current && observer.unobserve(current);
-  }, []);
-
-  return (
-    <div
-      ref={domRef}
-      className={`${styles.fadeIn} ${isVisible ? styles.visible : ""}`}
-    >
-      {children}
-    </div>
-  );
-}
 
 function Countdown({ onComplete }) {
   const countdownTime = 10000;
@@ -73,6 +46,7 @@ export default function HomePage() {
   const [showCountdown, setShowCountdown] = useState(false);
   const [launchCodeInput, setLaunchCodeInput] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const initialAudioRef = useRef();
   const nukeAudioRef = useRef();
@@ -168,9 +142,7 @@ export default function HomePage() {
                 <button
                   className={styles.cta}
                   onClick={() => {
-                    document
-                      .getElementById("about")
-                      ?.scrollIntoView({ behavior: "smooth" });
+                    navigate("./about");
                   }}
                 >
                   Learn More
@@ -178,47 +150,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-
-        <div id="about" className={styles.blocks}>
-          <Block
-            imgSrc={`${publicUrl}/assets/alex.jpeg`}
-            header="My Info"
-            subheading={
-              "B.S. Computer Science, with a Minor in Management and Leadership at Boston College"
-            }
-            subsubheading={"Co-Captain of Outdoor Adventures"}
-            text={[
-              { bold: "Email", text: "velsmida@bc.edu", link: false },
-              {
-                bold: "Github",
-                text: "https://github.com/alexv26",
-                linkTo: "https://github.com/alexv26",
-                link: true,
-              },
-              {
-                bold: "Linkedin",
-                text: "https://www.linkedin.com/in/alexander-velsmid/",
-                linkTo: "https://www.linkedin.com/in/alexander-velsmid/",
-                link: true,
-              },
-            ]}
-          />
-
-          <Block
-            imgSrc={`${publicUrl}/assets/with_friends.JPG`}
-            header="About Me"
-            text={[
-              {
-                text: "I am a rising senior at Boston College, studying Computer Science (BS) and pursuing a minor in Management and Leadership. Throughout my life I have been interested in problem-solving, and CS is the perfect way for me to turn this interest into a career.",
-              },
-              {
-                text: "Read more...",
-                link: true,
-                linkTo: "./#/about",
-              },
-            ]}
-          />
         </div>
 
         {secretButtonIsVisible && !nukeActive && (

@@ -12,8 +12,9 @@ import About from "./pages/About";
 import Error from "./pages/Error";
 import Projects from "./pages/Projects";
 import Game from "./pages/Game";
-import Game2 from "./game/page/Game2";
+import Game2 from "./fallout_game/page/Game2";
 import PDFViewer from "./pages/PDFViewer";
+import Pong from "./pong_game/page/Pong";
 import "./App.css";
 
 function ScrollToTop() {
@@ -52,6 +53,7 @@ function AppContent() {
           <Route path="/projects" element={<Projects />} />
           <Route path="/game" element={<Game2 />} />
           <Route path="/game2" element={<Game />} />
+          <Route path="/pong" element={<Pong />} />
           <Route path="/pdfviewer/:pdfName" element={<PDFViewer />} />
           <Route path="/*" element={<Error errorCode={404} />} />
         </Routes>
