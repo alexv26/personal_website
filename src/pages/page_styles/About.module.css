@@ -231,6 +231,7 @@
     align-items: center;
     width: 250px; /* Set a fixed width or use max-width */
     box-sizing: border-box;
+    transition: none;
   }
 
   .galleryTile img {
@@ -252,5 +253,10 @@
 
   .galleryTile:last-child {
     margin-right: calc(50vw - 125px);
+  }
+
+  .galleryTile:hover {
+    transform: none;
+    box-shadow: none;
   }
 }

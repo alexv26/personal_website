@@ -99,27 +99,37 @@ export default function About() {
           </div>
           <div className={styles.gallery}>
             <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/alex_jeff_evan.jpeg`}
-              description={"Me, Jeffrey, and Evan hiking Mt Washington."}
-            />
-            <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/washington.jpeg`}
               description={"Approaching Mt. Washington summit."}
             />
             <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/pres-traverse.jpeg`}
+              description={
+                "Presidential Traverse (View from Mt. Washington summit)."
+              }
+            />
+            <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/washington-trail.jpeg`}
+              description={"Mt. Washington via Ammonoosuc Ravine Trail."}
+            />
+            <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/alex_jeff_evan.jpeg`}
+              description={"Me and friends hiking Mt Washington."}
+            />
+            <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/moosilauke.jpeg`}
-              description={"At the Mt. Moosilauke summit."}
+              description={"Mt. Moosilauke summit."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/lexi.JPG`}
-              description={
-                "My dog Lexi. She was the best dog ever. I love and miss her."
-              }
+              description={"My dog Lexi 🕊️🤍."}
             />
 
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/universal.jpeg`}
-              description={"High school senior trip to Universal Studios."}
+              description={
+                "High school senior trip to Universal Studios with friends."
+              }
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/monroe.jpeg`}
@@ -127,11 +137,15 @@ export default function About() {
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/with_dad_hike.jpg`}
-              description={"Hiking trip with my dad."}
+              description={"Hiking trip with dad."}
             />
             <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/me_and_gavin.jpg`}
-              description={"Me and my friend Gavin at graduation."}
+              imgSrc={`${publicUrl}/assets/gallery/volley.jpeg`}
+              description={"Intramural Volleyball Team."}
+            />
+            <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/bike.jpeg`}
+              description={"My bike on the Charles River Esplanade."}
             />
           </div>
         </div>
