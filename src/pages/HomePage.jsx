@@ -125,7 +125,7 @@ export default function HomePage() {
               <button
                 onClick={() => setClickCount(clickCount + 1)}
                 className={styles.profileButton}
-                style={{ background: "none" }}
+                style={{ background: "none", padding: "0" }}
               >
                 <img
                   src={`${publicUrl}/assets/alex.jpeg`}
