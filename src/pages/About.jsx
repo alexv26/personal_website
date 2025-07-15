@@ -116,10 +116,7 @@ export default function About() {
                 "My dog Lexi. She was the best dog ever. I love and miss her."
               }
             />
-            <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/hiking_with_bsa.jpeg`}
-              description={"Hiking with Boy Scout troop up Mt. Lafayette."}
-            />
+
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/universal.jpeg`}
               description={"High school senior trip to Universal Studios."}

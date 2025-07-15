@@ -68,7 +68,7 @@
 }
 
 .cta {
-  background-color: #ff7f50;
+  background-color: #007bff;
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -79,7 +79,8 @@
 }
 
 .cta:hover {
-  background-color: #ff5722;
+  background-color: #77b9ff;
+  color: black;
 }
 
 .blocks {
