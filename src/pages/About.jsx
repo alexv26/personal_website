@@ -42,7 +42,7 @@ export default function About() {
                 B.S. Computer Science, with a Minor in Management and Leadership
                 at Boston College
               </h2>
-              <h3>Co-Captain of Outdoor Adventures</h3>
+              <h3>President of Outdoor Adventures</h3>
             </div>
 
             <div className={styles.links}>
@@ -61,35 +61,30 @@ export default function About() {
           <div className={styles.box}>
             <p>
               I am a rising senior at Boston College, studying Computer Science
-              (BS) and pursuing a minor in Management and Leadership. Throughout
-              my life I have been interested in problem-solving, and computer
-              science is the perfect way for me to channel this passion into a
-              career. Beyond the problem-solving inherent in coding itself, the
-              applications we create provide practical solutions to significant
-              real-world challenges.
+              (BS) and pursuing a minor in Management and Leadership. I'm
+              passionate about using computer science to provide practical
+              solutions to significant real-world challenges.
             </p>
             <p>
-              Alongside my passion for computer science, I also have a deep love
-              for the outdoors. When I was young, my dad introduced me to the
-              Cub Scouts, where I gained my first meaningful outdoor
-              experiences. I continued through the Boy Scouts program,
-              ultimately earning the Eagle Scout award—the highest honor in
-              scouting. In college I wanted to continue that experience, so I
-              joined Boston College's Outdoor Adventures program as a trip
-              leader, and lead trips across New England for the community to
-              enjoy. This coming year, I am serving as the club's Co-Captain,
-              and hope to be able to create a welcoming and accessible
-              environment for all.
+              I have extensive experience in Python, Pytorch, CVXPY, and general
+              machine-learning concepts through my experience working on a
+              machine-learning model designed to identify code vulnerabilities (
+              <a href={"./#/projects"}>read more</a>). Additionally, I have
+              experience in Java, SpringBoot APIs, HTML/CSS, React, and identity
+              and access management (IAM) through my work with Boston College
+              IT's Middleware group.
             </p>
             <p>
-              To further my committment to leadership and serving my community,
-              I began pursuing a minor in Management and Leadership. Throughout
-              my early career, between my jobs at Tatte bakery, the BC
-              Intramural program, and the IT department at BC, I have observed
-              the incredible value an effective manager brings to a team
-              environment. This program equips me to build stronger teams, not
-              only by enhancing productivity but also by nurturing collaboration
-              and positive relationships.
+              Apart from CS, I also have a deep love for the outdoors and am
+              actively serving as the president for the Outdoor Adventures Co-op
+              at BC. My goal is to be able to use my technical skills to provide
+              ways for outdoor lovers to build connections, discover new
+              adventures, and plan safer trips.
+            </p>
+            <p>
+              I am actively searching for software engineering opportunities. If
+              you are interested in connecting please use one of the links below
+              my profile to reach me.
             </p>
           </div>
         </div>
@@ -103,18 +98,22 @@ export default function About() {
               description={"Approaching Mt. Washington summit."}
             />
             <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/with_dad_hike.jpg`}
+              description={"Hiking trip with dad."}
+            />
+            <GalleryTile
+              imgSrc={`${publicUrl}/assets/gallery/alex_jeff_evan.jpeg`}
+              description={"Me and friends hiking Mt Washington."}
+            />
+            <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/pres-traverse.jpeg`}
               description={
-                "Presidential Traverse (View from Mt. Washington summit)."
+                "Presidential Traverse (view from Mt. Washington summit)."
               }
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/washington-trail.jpeg`}
               description={"Mt. Washington via Ammonoosuc Ravine Trail."}
-            />
-            <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/alex_jeff_evan.jpeg`}
-              description={"Me and friends hiking Mt Washington."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/moosilauke.jpeg`}
@@ -134,10 +133,6 @@ export default function About() {
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/monroe.jpeg`}
               description={"Mt. Monroe Summit."}
-            />
-            <GalleryTile
-              imgSrc={`${publicUrl}/assets/gallery/with_dad_hike.jpg`}
-              description={"Hiking trip with dad."}
             />
             <GalleryTile
               imgSrc={`${publicUrl}/assets/gallery/volley.jpeg`}

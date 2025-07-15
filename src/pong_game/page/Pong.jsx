@@ -124,11 +124,7 @@ export default function Pong() {
 
   return (
     <>
-      <div
-        ref={gameAreaRef}
-        className={styles.gameArea}
-        style={{ width: "100%", height: "100%" }}
-      >
+      <div ref={gameAreaRef} className={styles.gameArea}>
         {/* Player paddle */}
         <div
           className={styles.playerPaddle}
