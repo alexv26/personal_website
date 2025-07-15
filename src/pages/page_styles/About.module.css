@@ -21,11 +21,11 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
-  align-items: flex-start;
+  align-items: flex-start stretch;
   width: 100%;
   min-width: 275px;
   margin: 0 auto; /* Center the section */
-  align-items: stretch; /* This makes children match height */
+
   padding: 2rem;
   gap: 30px;
   box-sizing: border-box;
@@ -215,6 +215,7 @@
   .aboutSection {
     width: 100%;
     max-width: 800px;
+    align-items: flex-start;
   }
   .gallery {
     column-count: 2;
