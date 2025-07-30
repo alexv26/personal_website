@@ -7,12 +7,15 @@
   justify-content: center;
   align-items: center;
   height: 60px;
-  background-color: rgba(30, 60, 90, 0.25);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  /*
+  background-color: rgba(30, 60, 90, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-  color: #f0f0f0;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  */
+  background-color: var(--color-navbar-background);
+  color: #f0f0f0;
   z-index: 1000; /* Ensure it stays above other content */
   user-select: none;
 }
