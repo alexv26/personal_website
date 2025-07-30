@@ -57,7 +57,7 @@
   color: rgb(112, 246, 253);
 }
 
-.aboutMeText h2 {
+.aboutMeText > h2 {
   margin-top: 0;
   margin-bottom: 0;
   color: rgb(221, 253, 255);
@@ -75,6 +75,11 @@
   width: 100%;
   gap: 1.2rem;
   justify-content: center;
+}
+
+.icon {
+  width: 100%;
+  max-width: 40px;
 }
 
 .aboutImg {
@@ -99,6 +104,10 @@
   color: var(--liquid-glass-text-color);
   text-shadow: var(--liquid-glass-text-shadow);
   */
+}
+
+.box h2 {
+  font-size: 2rem;
 }
 
 .aboutImgAndLinks,

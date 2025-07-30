@@ -15,7 +15,7 @@ function Icon({ iconSrc, linkTo }) {
     <>
       <a href={linkTo} target="_blank" rel="noopener noreferrer">
         <img
-          style={{ maxWidth: "40px" }}
+          className={styles.icon}
           src={`${publicUrl}/assets/icons/${iconSrc}`}
         />
       </a>
@@ -27,9 +27,7 @@ export default function About() {
   return (
     <>
       <div className={styles.flexContainer}>
-        <div className={styles.aboutHeader}>
-          <h2>About Me</h2>
-        </div>
+        <div className={styles.aboutHeader}></div>
         <div className={styles.aboutSection}>
           <div className={styles.aboutImgAndLinks}>
             <img
@@ -59,6 +57,7 @@ export default function About() {
             </div>
           </div>
           <div className={styles.box}>
+            <h2>About Me</h2>
             <p>
               I am a rising senior at Boston College, studying Computer Science
               (BS) and pursuing a minor in Management and Leadership. I'm
