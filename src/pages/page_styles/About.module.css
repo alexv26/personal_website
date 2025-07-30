@@ -40,13 +40,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: var(--liquid-glass-bg);
-  backdrop-filter: var(--liquid-glass-blur);
-  -webkit-backdrop-filter: var(--liquid-glass-blur);
-  border: var(--liquid-glass-border);
-  box-shadow: var(--liquid-glass-shadow);
-  color: var(--liquid-glass-text-color);
-  text-shadow: var(--liquid-glass-text-shadow);
   border-radius: 8px;
 }
 
@@ -97,6 +90,7 @@
   justify-content: flex-start;
   padding: 1.5rem;
   border-radius: 8px;
+  /*
   background-color: var(--liquid-glass-bg);
   backdrop-filter: var(--liquid-glass-blur);
   -webkit-backdrop-filter: var(--liquid-glass-blur);
@@ -104,6 +98,21 @@
   box-shadow: var(--liquid-glass-shadow);
   color: var(--liquid-glass-text-color);
   text-shadow: var(--liquid-glass-text-shadow);
+  */
+}
+
+.aboutImgAndLinks,
+.box {
+  /*
+  background-color: var(--liquid-glass-bg);
+  backdrop-filter: var(--liquid-glass-blur);
+  -webkit-backdrop-filter: var(--liquid-glass-blur);
+  border: var(--liquid-glass-border);
+  box-shadow: var(--liquid-glass-shadow);
+  color: var(--liquid-glass-text-color);
+  text-shadow: var(--liquid-glass-text-shadow);
+  */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
 }
 
 .box h1 {
@@ -150,7 +159,7 @@
 }
 
 .gallery {
-  column-count: 3;
+  column-count: 4;
   column-gap: 20px;
   width: 100%;
   padding: 20px;
@@ -163,6 +172,7 @@
   flex-direction: column;
   break-inside: avoid;
   margin-bottom: 20px;
+  /*
   background-color: var(--liquid-glass-bg);
   backdrop-filter: var(--liquid-glass-blur);
   -webkit-backdrop-filter: var(--liquid-glass-blur);
@@ -170,14 +180,16 @@
   box-shadow: var(--liquid-glass-shadow);
   color: var(--liquid-glass-text-color);
   text-shadow: var(--liquid-glass-text-shadow);
+  */
+  /*background-color: var(--color-tile-background);*/
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   padding: 10px;
-  box-sizing: border-box;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .galleryTile:hover {
-  transform: scale(1.03);
+  transform: scale(1.01);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
 }
 
@@ -247,7 +259,8 @@
     width: 250px; /* Set a fixed width or use max-width */
     box-sizing: border-box;
     transition: none;
-    box-shadow: none;
+
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
   }
 
   .galleryTile img {

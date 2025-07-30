@@ -1,5 +1,5 @@
 // App.jsx
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   HashRouter as Router,
   Routes,
@@ -17,34 +17,75 @@ import PDFViewer from "./pages/PDFViewer";
 import Pong from "./pong_game/page/Pong";
 import "./App.css";
 
-function ScrollToTop() {
-  const { pathname } = useLocation();
+const backgroundImg = false; // This flag still controls your other backgrounds
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
-
-  return null;
-}
-
-// ✅ Now we can use useLocation safely here
 function AppContent() {
   const location = useLocation();
+  const publicUrl = import.meta.env.BASE_URL; // publicUrl needs to be available here
 
   return (
     <>
-      <ScrollToTop />
-      {location.pathname !== "/game" && (
+      {/* Background Layer: Mutually exclusive rendering */}
+      {location.pathname === "/" ? (
+        // IF ON HOMEPAGE, RENDER ONLY VANTA BACKGROUND
         <div
-          className="background-image"
+          className="backgroundGradient"
           style={{
-            "--bg-url": `url('${
-              import.meta.env.BASE_URL
-            }assets/background.jpeg')`,
+            position: "fixed", // Ensure fixed positioning
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            zIndex: -1,
           }}
-        ></div>
+        />
+      ) : (
+        // IF NOT ON HOMEPAGE, RENDER OTHER BACKGROUNDS BASED ON EXISTING LOGIC
+        <>
+          {backgroundImg && location.pathname !== "/game" && (
+            <div
+              className="background-image"
+              style={{
+                position: "fixed", // Ensure fixed positioning
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: -1,
+                "--bg-url": `url('${publicUrl}assets/background.jpeg')`,
+              }}
+            ></div>
+          )}
+          {location.pathname === "/game" && (
+            <div
+              className="backgroundColor"
+              style={{
+                position: "fixed", // Ensure fixed positioning
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: -1,
+              }}
+            ></div>
+          )}
+          {!backgroundImg && location.pathname !== "/game" && (
+            <div
+              className="backgroundGradient"
+              style={{
+                position: "fixed", // Ensure fixed positioning
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                zIndex: -1,
+              }}
+            />
+          )}
+        </>
       )}
-      {location.pathname === "/game" && <div className="backgroundColor"></div>}
+
+      {/* Foreground Content */}
       <NavigationBar />
       <div className="mainContent">
         <Routes>
@@ -62,10 +103,10 @@ function AppContent() {
   );
 }
 
-// ✅ Wrap the entire app in <Router> at the top level
 export default function App() {
   return (
     <Router>
+      {/* ScrollToTop must be within Router to use useLocation */}
       <AppContent />
     </Router>
   );

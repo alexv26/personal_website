@@ -1,17 +1,27 @@
 import styles from "./page_styles/Projects.module.css";
 const publicUrl = import.meta.env.BASE_URL;
 
-function ProjectTile({ title, description, imgSrc, linkText, linkTo }) {
+function ProjectTile({
+  title,
+  description,
+  imgSrc = "",
+  linkText,
+  linkTo,
+  videoSrc = "",
+}) {
   return (
     <div className={styles.projectTile}>
       <h2>{title}</h2>
-      <img src={imgSrc} />
-      <p>{description}</p>
-      {!!linkText && !!linkTo && (
-        <a style={{ color: "turquoise", fontWeight: "bold" }} href={linkTo}>
-          {linkText}
-        </a>
-      )}
+      {imgSrc !== "" && <img src={imgSrc} />}
+      {videoSrc !== "" && <video src={videoSrc} muted autoPlay loop />}
+      <div className={styles.tileText}>
+        <p>{description}</p>
+        {!!linkText && !!linkTo && (
+          <a style={{ color: "turquoise", fontWeight: "bold" }} href={linkTo}>
+            {linkText}
+          </a>
+        )}
+      </div>
     </div>
   );
 }
@@ -20,8 +30,8 @@ export default function Projects() {
   return (
     <>
       <div className={styles.flexwrapper}>
+        <h1>My Projects</h1>
         <div className={styles.content}>
-          <h1>My Projects</h1>
           <ProjectTile
             title={
               "VulnML: Using Machine Learning to Detect Code Vulnerabilities"
@@ -38,7 +48,7 @@ export default function Projects() {
             description={
               "A website designed for lovers of the outdoors (particularly hikers and campers) to plan their outdoor adventures. A common issue in the hiking world is a lack of thorough planning for trips. People will frequently go on day trips without giving much thought to important safety considerations like finding the nearest hospital, alternate rouutes, etc. A contributing factor to this problem is that people have a hard time finding access to the right resoures, or putting together a solid meal plan. This website aims to solve that problem by guiding the user through the planning process, and automating monotonous steps. The user also has the option to browse past trips published by other users, saving them the trouble of creating a whole new plan from scratch. This project is still a work in progress."
             }
-            imgSrc={`${publicUrl}/assets/trailplanner.png`}
+            videoSrc={`${publicUrl}/assets/trailplanner_demo.mov`}
           />
           <ProjectTile
             title={"Nuke Fallout Game (WIP)"}
